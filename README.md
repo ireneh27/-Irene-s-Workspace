@@ -1,6 +1,6 @@
-# Personal Portfolio Website
+# Irene's English Teaching Workspace
 
-A modern, responsive personal portfolio website built with HTML, CSS, and JavaScript. Features smooth animations, gradient designs, and a professional layout perfect for showcasing your work.
+A modern, responsive personal teaching portfolio website showcasing English learning materials, lesson slides, and educational resources for students of all levels in China.
 
 ## ✨ Features
 
@@ -8,192 +8,242 @@ A modern, responsive personal portfolio website built with HTML, CSS, and JavaSc
 - ✅ **Fully responsive** - Optimized for mobile, tablet, and desktop
 - ✅ **Smooth animations** - Fade-in effects, parallax scrolling, and hover interactions
 - ✅ **Modern gradient hero** section with animated scroll indicator
-- ✅ **Glass morphism effects** - Contemporary backdrop blur effects
-- ✅ **Professional color scheme** - Customizable CSS variables
+- ✅ **Professional color scheme** - Education-friendly design
+- ✅ **Easy navigation** - Quick access to materials and slides
 
 ### Sections
-- ✅ **Hero Section** - Eye-catching introduction with multiple CTAs
-- ✅ **About Section** - Bio, stats grid, and technology list
-- ✅ **Projects Showcase** - Feature your best work with hover effects
-- ✅ **Presentations Section** - Dedicated area for your talks and slides
-- ✅ **Skills Categories** - Organized by Frontend, Backend, and Tools
-- ✅ **Contact Section** - Email and social media links
+- ✅ **Hero Section** - Welcome message and introduction
+- ✅ **About Section** - Your teaching background and areas of expertise
+- ✅ **Teaching Materials** - Organized by level (Beginner, Intermediate, Advanced)
+- ✅ **Lesson Slides** - Interactive HTML presentations for your classes
+- ✅ **Resources Section** - Additional learning tools and study tips
+- ✅ **Contact Section** - Easy way for students and colleagues to reach you
 - ✅ **Mobile Navigation** - Hamburger menu with smooth transitions
 
-### Interactive Elements
-- ✅ Smooth scroll navigation
-- ✅ Active navigation highlighting
-- ✅ Staggered reveal animations
-- ✅ Parallax hero effect
-- ✅ Hover state micro-interactions
+## 🚀 Quick Start - Deploying to Your GitHub Pages
 
-## 🚀 Quick Start
+### Step 1: Update Your Repository
 
-1. **Customize the content:**
-   - Open `index.html` and replace all placeholder text with your information
-   - Update your name, bio, projects, skills, and contact information
-   - Replace placeholder links with your actual social media profiles
+1. Go to your GitHub repository: `https://github.com/lkk2114/-Irene-s-Workspace`
+2. Click on "Add file" → "Upload files"
+3. Upload these files:
+   - `index.html`
+   - `styles.css`
+   - `script.js`
+   - `README.md`
+4. Commit the changes
 
-2. **Deploy to GitHub Pages:**
-   - Create a new repository named `yourusername.github.io` (replace with your GitHub username)
-   - Upload all files (index.html, styles.css, script.js) to the repository
-   - Go to Settings → Pages
-   - Select your main branch as the source
-   - Your site will be live at `https://yourusername.github.io`
+### Step 2: Create a Slides Folder
+
+1. In your repository, create a new folder called `slides`
+2. This is where you'll upload your lesson presentation HTML files
+3. You can use the provided `example-presentation.html` as a template
+
+### Step 3: Enable GitHub Pages (if not already enabled)
+
+1. Go to Settings → Pages
+2. Under "Source", select your main branch
+3. Click "Save"
+4. Your site will be live at: `https://lkk2114.github.io/-Irene-s-Workspace/`
 
 ## 📝 Customization Guide
 
-### Update Your Information
+### Update Your Contact Information
 
-**In `index.html`, replace:**
-- `Your Name` - Your actual name (appears in multiple places)
-- `Full-Stack Developer | Problem Solver | Tech Enthusiast` - Your professional title/tagline
-- `your.email@example.com` - Your email address
-- `yourusername` - Your GitHub/social media usernames
-- `[Your Location]` - Your location
-- `[Year]` - When you started coding
-
-### Update Stats (About Section)
-
-Customize the statistics in the stats grid:
+In `index.html`, find and replace:
 ```html
-<div class="stat-card">
-    <h3>5+</h3>
-    <p>Years Experience</p>
+<a href="mailto:irene.teacher@example.com" class="btn btn-primary">Contact Me</a>
+```
+Replace `irene.teacher@example.com` with your actual email address.
+
+### Add Your Own Lesson Slides
+
+#### Option 1: Use the Template
+1. Copy the `example-presentation.html` file
+2. Rename it to match your lesson (e.g., `grammar-lesson1.html`)
+3. Edit the content:
+   - Change the title
+   - Update slide content
+   - Modify the number of slides
+   - Customize colors if desired
+
+#### Option 2: Upload Existing Slides
+If you already have HTML slides (like PowerPoint exports or Reveal.js presentations):
+1. Upload them to the `slides/` folder
+2. Update the links in `index.html` to point to your files
+
+### Updating Lesson Links in index.html
+
+Find the Lesson Slides section and update each card:
+
+```html
+<div class="project-card">
+    <div class="project-header">
+        <h3>Your Lesson Title</h3>
+        <div class="project-links">
+            <a href="slides/your-lesson-file.html" class="project-link" aria-label="View Slides">
+                <!-- SVG icon -->
+            </a>
+        </div>
+    </div>
+    <p class="project-description">Description of your lesson...</p>
+    <div class="project-tech">
+        <span class="tech-tag">Grammar</span>
+        <span class="tech-tag">Intermediate</span>
+    </div>
 </div>
 ```
 
-Change the numbers and labels to reflect your experience.
+### Add More Lesson Cards
 
-### Modify Projects
+To add more lessons, copy the entire project-card div and paste it in the Lesson Slides section:
 
-Each project card includes:
-- Project title
-- Description
-- Technologies used (tech tags)
-- Links to GitHub repo and live demo
-
-Replace the placeholder projects with your own work. To add more projects, copy the entire `<div class="project-card">...</div>` block.
-
-### Add Your Presentations
-
-In the Presentations section:
-1. Update presentation titles
-2. Change descriptions
-3. Update links: `slides/your-presentation.html`
-4. Modify tech tags to match your stack
-
-### Update Skills
-
-In the Skills section, add or remove technologies based on your expertise:
-- Frontend skills
-- Backend skills  
-- Tools and other technologies
-
-Each skill tag is interactive with hover effects.
-
-### Change Colors
-
-To customize the color scheme, edit the CSS variables in `styles.css`:
-
-```css
-:root {
-    --primary-color: #6366f1;      /* Main brand color */
-    --primary-dark: #4f46e5;       /* Darker shade */
-    --secondary-color: #8b5cf6;    /* Accent color */
-    --text-primary: #1f2937;       /* Main text color */
-    --text-secondary: #6b7280;     /* Secondary text color */
-}
+```html
+<div class="project-card">
+    <div class="project-header">
+        <h3>New Lesson Title</h3>
+        <div class="project-links">
+            <a href="slides/new-lesson.html" class="project-link" aria-label="View Slides">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+            </a>
+        </div>
+    </div>
+    <p class="project-description">Your lesson description here...</p>
+    <div class="project-tech">
+        <span class="tech-tag">Topic</span>
+        <span class="tech-tag">Level</span>
+    </div>
+</div>
 ```
 
-### Customize Animations
+### Update Teaching Materials Section
 
-You can adjust animation speeds and effects in `styles.css`:
-- Hero animations: Search for `@keyframes fadeInUp`
-- Scroll indicator: Adjust `@keyframes bounce`
-- Hover effects: Modify transition durations in respective sections
+You can modify the teaching materials cards to link to:
+- PDF files you upload
+- Google Drive folders with your materials
+- Other resources you want to share
 
-## 📦 File Structure
+Replace the `#` in the href with your actual link:
+```html
+<a href="your-link-here.pdf" class="project-link" aria-label="View Materials">
+```
+
+## 📁 File Structure
 
 ```
-yourusername.github.io/
-├── index.html              # Main HTML file with all sections
-├── styles.css              # Complete styling with animations
+-Irene-s-Workspace/
+├── index.html              # Main homepage
+├── styles.css              # All styling
 ├── script.js               # Interactive features
-├── README.md               # Documentation
-└── slides/                 # (Create this) Your presentation files
-    ├── presentation1.html
-    ├── presentation2.html
-    └── workshop.html
+├── README.md               # This file
+└── slides/                 # Create this folder for your presentations
+    ├── grammar-lesson1.html
+    ├── vocabulary-lesson.html
+    ├── reading-practice.html
+    └── ...                 # Add more lesson files here
 ```
 
-## 🎨 Design Features
+## 🎨 Creating Lesson Slides
 
-### Color Palette
-- **Primary**: Indigo (#6366f1)
-- **Secondary**: Purple (#8b5cf6)
-- **Accent**: Amber (#fbbf24)
-- Uses a beautiful gradient hero background
+### Using the Template
 
-### Typography
-- **Font**: Inter (Google Fonts)
-- Clean, modern, and highly readable
-- Responsive font sizes
+The `example-presentation.html` file is a simple slide template with:
+- Title slide
+- Content slides
+- Navigation buttons (Previous/Next)
+- Keyboard navigation (arrow keys)
+- Responsive design
 
-### Components
-- Gradient hero section with parallax effect
-- Stats cards with gradient backgrounds
-- Project cards with top border reveal
-- Skill tags with hover animations
-- Smooth mobile hamburger menu
+### Customizing Slides
 
-## 🌐 Browser Support
+1. **Add a new slide:**
+```html
+<div class="slide">
+    <h2>Your Slide Title</h2>
+    <p>Your content here...</p>
+    <ul>
+        <li>Point 1</li>
+        <li>Point 2</li>
+    </ul>
+</div>
+```
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+2. **Update the total number of slides:**
+Find this line and change the number:
+```html
+<span id="totalSlides">7</span>  <!-- Change this number -->
+```
 
-## 📄 License
+3. **Change colors:**
+Edit the background gradient in the style section:
+```css
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+```
 
-Feel free to use this template for your own portfolio! No attribution required.
+## 💡 Tips for Success
 
-## 💡 Tips
+### For Materials
+1. **Organize by level** - Keep beginner, intermediate, and advanced materials separate
+2. **Use clear names** - Name your files descriptively (e.g., `beginner-grammar-present-tense.pdf`)
+3. **Upload to cloud** - Consider using Google Drive for large PDF files and link to them
 
-1. **Add a favicon:** Create a `favicon.ico` file and add it to your repository
-2. **Optimize images:** If you add images, compress them for faster loading (use tools like TinyPNG)
-3. **SEO:** Update the meta description in the HTML head section for better search visibility
-4. **Analytics:** Add Google Analytics if you want to track visitors
-5. **Custom domain:** You can add a custom domain in GitHub Pages settings
-6. **Performance:** The site is optimized for performance with minimal dependencies
-7. **Accessibility:** All interactive elements have proper ARIA labels
+### For Slides
+1. **Keep it simple** - One main idea per slide
+2. **Use visuals** - Add images to make slides more engaging
+3. **Test on mobile** - Many students may view on phones
 
-## 🚀 Performance
+### For Your Website
+1. **Update regularly** - Add new materials as you create them
+2. **Get feedback** - Ask students what materials are most helpful
+3. **Keep it organized** - Use consistent naming and categorization
 
-- **Lightweight**: No heavy frameworks or libraries
-- **Fast loading**: Minimal external dependencies (only Google Fonts)
-- **Optimized animations**: CSS-based animations for smooth performance
-- **Mobile-first**: Responsive design prioritizes mobile experience
+## 🔗 Adding External Links
 
-## ♿ Accessibility
+To link to external resources (PDFs, Google Drive, etc.):
 
-- Semantic HTML5 elements
-- Proper heading hierarchy
-- ARIA labels for icon links
-- Sufficient color contrast
-- Keyboard navigation support
-- Smooth focus indicators
+1. Upload files to Google Drive or another hosting service
+2. Get the shareable link
+3. Update the href in your HTML:
 
-## 🤝 Need Help?
+```html
+<a href="https://drive.google.com/file/d/YOUR-FILE-ID/view" class="project-link">
+```
 
-If you encounter any issues:
-1. Check the browser console for JavaScript errors
-2. Ensure all files are in the same directory
-3. Verify that your repository is public
-4. Wait a few minutes after pushing changes for GitHub Pages to update
+## 📱 Mobile Optimization
 
-## 🎉 You're All Set!
+The website is fully responsive and works great on:
+- Mobile phones
+- Tablets
+- Desktop computers
 
-Once you've customized the content and deployed to GitHub Pages, your personal website will be live and ready to share with the world!
+Students can access your materials from any device!
 
-Good luck with your portfolio! 🚀
+## 🆘 Need Help?
+
+If you encounter issues:
+1. Check that all file names match exactly (including `.html` extension)
+2. Ensure files are in the correct folders
+3. Wait a few minutes after uploading for GitHub Pages to update
+4. Clear your browser cache if changes don't appear
+
+## ✅ Checklist for Going Live
+
+- [ ] Replace email address with your real email
+- [ ] Update the About section with your teaching background
+- [ ] Create the `slides/` folder
+- [ ] Upload at least one lesson slide
+- [ ] Update lesson links to point to your actual files
+- [ ] Add links to your teaching materials
+- [ ] Test the website on mobile and desktop
+- [ ] Share the link with your students!
+
+## 🎉 Your Website URL
+
+Once deployed, share this link with your students:
+**https://lkk2114.github.io/-Irene-s-Workspace/**
+
+Good luck with your teaching website! 📚✨

@@ -137,4 +137,4 @@ revealElements.forEach((element, index) => {
     element.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
 });
 
-console.log('Personal website loaded successfully! 🚀');
+console.log('Irene\'s English Teaching Workspace loaded successfully! 🚀');
