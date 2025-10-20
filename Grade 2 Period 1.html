@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Period 1: Dream Classroom Launch (Interactive)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+        }
+        
+        .slide-container {
+            min-height: 100vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        
+        .slide {
+            display: none;
+            min-height: 100vh;
+            padding: 80px 60px 120px 60px;
+            background: white;
+            position: relative;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            bottom: 100px;
+            right: 40px;
+            font-size: 48px;
+            color: #e74c3c;
+            animation: bounce 2s infinite;
+            z-index: 999;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .slide-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 100;
+            padding: 20px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 40px;
+        }
+        
+        .slide-number {
+            font-size: 24px;
+            color: #666;
+            font-weight: bold;
+            float: right;
+        }
+        
+        h1 {
+            font-size: 72px;
+            color: #2d3748;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            font-size: 56px;
+            color: #4a5568;
+            margin: 40px 0 30px 0;
+            text-align: center;
+        }
+        
+        h3 {
+            font-size: 42px;
+            color: #2d3748;
+            margin: 30px 0 20px 0;
+        }
+        
+        p, li {
+            font-size: 36px;
+            line-height: 1.8;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        
+        .emoji {
+            font-size: 120px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .content-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: #f7fafc;
+            border-radius: 20px;
+        }
+        
+        .quiz-container {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 50px;
+            border-radius: 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .quiz-question {
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .quiz-option {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            font-size: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 4px solid transparent;
+        }
+        
+        .quiz-option:hover {
+            transform: scale(1.05);
+            border-color: #3498db;
+        }
+        
+        .quiz-option.correct {
+            background: #27ae60;
+            color: white;
+            border-color: #27ae60;
+            animation: celebrate 0.5s;
+        }
+        
+        .quiz-option.wrong {
+            background: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
+            animation: shake 0.5s;
+        }
+        
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .quiz-feedback {
+            font-size: 36px;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            min-height: 50px;
+        }
+        
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .vocab-card {
+            background: #f7fafc;
+            border: 4px solid #4299e1;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-height: 200px;
+        }
+        
+        .vocab-card:hover {
+            background: #4299e1;
+            color: white;
+            transform: translateY(-10px) scale(1.05);
+        }
+        
+        .vocab-card .back {
+            display: none;
+        }
+        
+        .vocab-card.flipped .front {
+            display: none;
+        }
+        
+        .vocab-card.flipped .back {
+            display: block;
+        }
+        
+        .vocab-emoji {
+            font-size: 64px;
+            margin-bottom: 15px;
+        }
+        
+        .vocab-word {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .vocab-chinese {
+            font-size: 24px;
+            color: #718096;
+        }
+        
+        .vocab-card:hover .vocab-chinese {
+            color: #fff;
+        }
+        
+        .matching-game {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 40px 0;
+        }
+        
+        .matching-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .matching-item {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            font-size: 32px;
+            text-align: center;
+            cursor: pointer;
+            border: 4px solid #bdc3c7;
+            transition: all 0.3s;
+        }
+        
+        .matching-item:hover {
+            border-color: #3498db;
+            transform: scale(1.05);
+        }
+        
+        .matching-item.selected {
+            border-color: #f39c12;
+            background: #fff3cd;
+            transform: scale(1.05);
+        }
+        
+        .matching-item.matched {
+            border-color: #27ae60;
+            background: #d5f4e6;
+            cursor: not-allowed;
+        }
+        
+        .reveal-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .reveal-box:hover {
+            transform: scale(1.02);
+        }
+        
+        .reveal-box .hidden-content {
+            display: none;
+            margin-top: 20px;
+            font-size: 38px;
+            animation: fadeIn 0.5s;
+        }
+        
+        .reveal-box.revealed .hidden-content {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        button {
+            padding: 15px 35px;
+            font-size: 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+        }
+        
+        .btn-prev {
+            background: #fc8181;
+            color: white;
+        }
+        
+        .btn-next {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .score-display {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #f39c12;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 20px;
+            font-size: 32px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        li::before {
+            content: "✓ ";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="score-display">⭐ Score: <span id="score">0</span></div>
+    <div class="scroll-indicator">⬇️</div>
+
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="slide-header">
+                <div class="slide-number">1/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="emoji">🏫</div>
+            <h1>Dream Classroom Project</h1>
+            <h2>Let's Design Together!</h2>
+            <p style="font-size: 42px; color: #718096; text-align: center;">Period 1: Plan & Explore</p>
+            
+            <div class="content-section" style="margin-top: 60px;">
+                <h3 style="text-align: center;">🎯 What We'll Do Today:</h3>
+                <ul style="max-width: 800px; margin: 0 auto; font-size: 38px;">
+                    <li>Play vocabulary games</li>
+                    <li>Take fun quizzes</li>
+                    <li>Form teams</li>
+                    <li>Plan our dream classroom</li>
+                    <li>Practice English together!</li>
+                </ul>
+            </div>
+            
+            <div class="reveal-box">
+                <p style="font-size: 42px; margin: 0;">👆 Click here to see a secret tip!</p>
+                <div class="hidden-content">
+                    💡 Today's secret: Work together and help each other!<br>
+                    团队合作最重要！
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Welcome Quiz -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">2/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>🎮 Quiz Time!</h1>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">Question 1: How do you say "你好" in English?</div>
+                <div class="quiz-options" id="quiz1">
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Goodbye</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">Hello</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Thank you</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Please</div>
+                </div>
+                <div class="quiz-feedback" id="feedback1"></div>
+            </div>
+            
+            <div class="content-section">
+                <h3>📚 Remember These Greetings:</h3>
+                <p style="text-align: center; font-size: 42px;">
+                    Hello = 你好<br>
+                    Good morning = 早上好<br>
+                    How are you? = 你好吗？
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Vocabulary Cards -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">3/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>📚 School Items - Click to Flip!</h1>
+            <p style="text-align: center; font-size: 38px; color: #e74c3c;">
+                点击卡片看中文！Click the cards!
+            </p>
+            
+            <div class="interactive-grid">
+                <div class="vocab-card" onclick="flipCard(this)">
+                    <div class="front">
+                        <div class="vocab-emoji">🖊️</div>
+                        <div class="vocab-word">DESK</div>
+                        <p style="font-size: 20px; color: #95a5a6;">click me!</p>
+                    </div>
+                    <div class="back">
+                        <div class="vocab-emoji">🖊️</div>
+                        <div class="vocab-word">课桌</div>
+                        <p style="font-size: 24px;">kè zhuō</p>
+                    </div>
+                </div>
+                
+                <div class="vocab-card" onclick="flipCard(this)">
+                    <div class="front">
+                        <div class="vocab-emoji">🪑</div>
+                        <div class="vocab-word">CHAIR</div>
+                        <p style="font-size: 20px; color: #95a5a6;">click me!</p>
+                    </div>
+                    <div class="back">
+                        <div class="vocab-emoji">🪑</div>
+                        <div class="vocab-word">椅子</div>
+                        <p style="font-size: 24px;">yǐ zi</p>
+                    </div>
+                </div>
+                
+                <div class="vocab-card" onclick="flipCard(this)">
+                    <div class="front">
+                        <div class="vocab-emoji">⬜</div>
+                        <div class="vocab-word">BOARD</div>
+                        <p style="font-size: 20px; color: #95a5a6;">click me!</p>
+                    </div>
+                    <div class="back">
+                        <div class="vocab-emoji">⬜</div>
+                        <div class="vocab-word">黑板/白板</div>
+                        <p style="font-size: 24px;">hēi bǎn / bái bǎn</p>
+                    </div>
+                </div>
+                
+                <div class="vocab-card" onclick="flipCard(this)">
+                    <div class="front">
+                        <div class="vocab-emoji">📚</div>
+                        <div class="vocab-word">BOOKCASE</div>
+                        <p style="font-size: 20px; color: #95a5a6;">click me!</p>
+                    </div>
+                    <div class="back">
+                        <div class="vocab-emoji">📚</div>
+                        <div class="vocab-word">书架</div>
+                        <p style="font-size: 24px;">shū jià</p>
+                    </div>
+                </div>
+                
+                <div class="vocab-card" onclick="flipCard(this)">
+                    <div class="front">
+                        <div class="vocab-emoji">💻</div>
+                        <div class="vocab-word">COMPUTER</div>
+                        <p style="font-size: 20px; color: #95a5a6;">click me!</p>
+                    </div>
+                    <div class="back">
+                        <div class="vocab-emoji">💻</div>
+                        <div class="vocab-word">电脑</div>
+                        <p style="font-size: 24px;">diàn nǎo</p>
+                    </div>
+                </div>
+                
+                <div class="vocab-card" onclick="flipCard(this)">
+                    <div class="front">
+                        <div class="vocab-emoji">👨‍🏫</div>
+                        <div class="vocab-word">TEACHER</div>
+                        <p style="font-size: 20px; color: #95a5a6;">click me!</p>
+                    </div>
+                    <div class="back">
+                        <div class="vocab-emoji">👨‍🏫</div>
+                        <div class="vocab-word">老师</div>
+                        <p style="font-size: 24px;">lǎo shī</p>
+                    </div>
+                </div>
+                
+                <div class="vocab-card" onclick="flipCard(this)">
+                    <div class="front">
+                        <div class="vocab-emoji">📏</div>
+                        <div class="vocab-word">RULER</div>
+                        <p style="font-size: 20px; color: #95a5a6;">click me!</p>
+                    </div>
+                    <div class="back">
+                        <div class="vocab-emoji">📏</div>
+                        <div class="vocab-word">尺子</div>
+                        <p style="font-size: 24px;">chǐ zi</p>
+                    </div>
+                </div>
+                
+                <div class="vocab-card" onclick="flipCard(this)">
+                    <div class="front">
+                        <div class="vocab-emoji">✏️</div>
+                        <div class="vocab-word">PENCIL</div>
+                        <p style="font-size: 20px; color: #95a5a6;">click me!</p>
+                    </div>
+                    <div class="back">
+                        <div class="vocab-emoji">✏️</div>
+                        <div class="vocab-word">铅笔</div>
+                        <p style="font-size: 24px;">qiān bǐ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Vocabulary Quiz -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">4/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>🎯 Vocabulary Quiz!</h1>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">What is this? 这是什么？</div>
+                <div class="emoji">📚</div>
+                <div class="quiz-options" id="quiz2">
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">desk</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">bookcase</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">ruler</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">computer</div>
+                </div>
+                <div class="quiz-feedback" id="feedback2"></div>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">What is this? 这是什么？</div>
+                <div class="emoji">✏️</div>
+                <div class="quiz-options" id="quiz3">
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">teacher</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">ruler</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">pencil</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">chair</div>
+                </div>
+                <div class="quiz-feedback" id="feedback3"></div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Numbers Game -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">5/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>🔢 Numbers 11-20 - Click to Reveal!</h1>
+            
+            <div class="interactive-grid">
+                <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                    <div style="font-size: 56px; font-weight: bold;">11</div>
+                    <div class="hidden-content">ELEVEN<br>十一</div>
+                </div>
+                <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                    <div style="font-size: 56px; font-weight: bold;">12</div>
+                    <div class="hidden-content">TWELVE<br>十二</div>
+                </div>
+                <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                    <div style="font-size: 56px; font-weight: bold;">13</div>
+                    <div class="hidden-content">THIRTEEN<br>十三</div>
+                </div>
+                <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                    <div style="font-size: 56px; font-weight: bold;">14</div>
+                    <div class="hidden-content">FOURTEEN<br>十四</div>
+                </div>
+                <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                    <div style="font-size: 56px; font-weight: bold;">15</div>
+                    <div class="hidden-content">FIFTEEN<br>十五</div>
+                </div>
+                <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                    <div style="font-size: 56px; font-weight: bold;">16</div>
+                    <div class="hidden-content">SIXTEEN<br>十六</div>
+                </div>
+                <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                    <div style="font-size: 56px; font-weight: bold;">17</div>
+                    <div class="hidden-content">SEVENTEEN<br>十七</div>
+                </div>
+                <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                    <div style="font-size: 56px; font-weight: bold;">18</div>
+                    <div class="hidden-content">EIGHTEEN<br>十八</div>
+                </div>
+                <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                    <div style="font-size: 56px; font-weight: bold;">19</div>
+                    <div class="hidden-content">NINETEEN<br>十九</div>
+                </div>
+                <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                    <div style="font-size: 56px; font-weight: bold;">20</div>
+                    <div class="hidden-content">TWENTY<br>二十</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Numbers Quiz -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">6/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>🎮 Numbers Quiz!</h1>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">What number is this?<br>FIFTEEN</div>
+                <div class="quiz-options" id="quiz4">
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">14</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">15</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">16</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">17</div>
+                </div>
+                <div class="quiz-feedback" id="feedback4"></div>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">How do you say "19" in English?</div>
+                <div class="quiz-options" id="quiz5">
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">ninety</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">ninth</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">nineteen</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">nine</div>
+                </div>
+                <div class="quiz-feedback" id="feedback5"></div>
+            </div>
+            
+            <div class="content-section">
+                <h3 style="text-align: center;">💡 Practice Counting!</h3>
+                <p style="text-align: center; font-size: 38px;">
+                    Say: 11, 12, 13, 14, 15, 16, 17, 18, 19, 20<br>
+                    <span style="color: #95a5a6;">eleven, twelve, thirteen, fourteen, fifteen...</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Colors Matching Game -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">7/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>🌈 Colors Matching Game!</h1>
+            <p style="text-align: center; font-size: 38px; color: #e74c3c;">
+                Click to match English with Chinese! 配对游戏！
+            </p>
+            
+            <div class="matching-game" id="colorMatch">
+                <div class="matching-column" id="englishColors">
+                    <div class="matching-item" data-match="red" onclick="selectMatch(this)">RED 🔴</div>
+                    <div class="matching-item" data-match="blue" onclick="selectMatch(this)">BLUE 🔵</div>
+                    <div class="matching-item" data-match="green" onclick="selectMatch(this)">GREEN 🟢</div>
+                    <div class="matching-item" data-match="yellow" onclick="selectMatch(this)">YELLOW 🟡</div>
+                </div>
+                <div class="matching-column" id="chineseColors">
+                    <div class="matching-item" data-match="green" onclick="selectMatch(this)">绿色</div>
+                    <div class="matching-item" data-match="red" onclick="selectMatch(this)">红色</div>
+                    <div class="matching-item" data-match="yellow" onclick="selectMatch(this)">黄色</div>
+                    <div class="matching-item" data-match="blue" onclick="selectMatch(this)">蓝色</div>
+                </div>
+            </div>
+            
+            <div class="content-section" style="margin-top: 40px;">
+                <h3>🎨 More Colors to Learn:</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center; font-size: 32px;">
+                    <div>ORANGE 🟠<br><span style="color: #95a5a6;">橙色</span></div>
+                    <div>PURPLE 🟣<br><span style="color: #95a5a6;">紫色</span></div>
+                    <div>PINK 🌸<br><span style="color: #95a5a6;">粉色</span></div>
+                    <div>BROWN 🟤<br><span style="color: #95a5a6;">棕色</span></div>
+                    <div>BLACK ⚫<br><span style="color: #95a5a6;">黑色</span></div>
+                    <div>WHITE ⚪<br><span style="color: #95a5a6;">白色</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Color Quiz -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">8/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>🎨 Color Quiz!</h1>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">What color is this? 这是什么颜色？<br>🟢</div>
+                <div class="quiz-options" id="quiz6">
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">blue</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">green</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">yellow</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">red</div>
+                </div>
+                <div class="quiz-feedback" id="feedback6"></div>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">What color is "紫色"?</div>
+                <div class="quiz-options" id="quiz7">
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">pink</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">brown</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">purple</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">orange</div>
+                </div>
+                <div class="quiz-feedback" id="feedback7"></div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Prepositions Interactive -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">9/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>📍 Prepositions - Where is it?</h1>
+            
+            <div class="content-section">
+                <div class="interactive-grid">
+                    <div class="vocab-card" onclick="flipCard(this)">
+                        <div class="front">
+                            <div class="vocab-emoji">⬆️</div>
+                            <div class="vocab-word">ON</div>
+                            <p style="font-size: 20px; color: #95a5a6;">click me!</p>
+                        </div>
+                        <div class="back">
+                            <div class="vocab-emoji">⬆️</div>
+                            <div class="vocab-word">在...上面</div>
+                            <p style="font-size: 28px;">zài... shàng miàn</p>
+                        </div>
+                    </div>
+                    
+                    <div class="vocab-card" onclick="flipCard(this)">
+                        <div class="front">
+                            <div class="vocab-emoji">📥</div>
+                            <div class="vocab-word">IN</div>
+                            <p style="font-size: 20px; color: #95a5a6;">click me!</p>
+                        </div>
+                        <div class="back">
+                            <div class="vocab-emoji">📥</div>
+                            <div class="vocab-word">在...里面</div>
+                            <p style="font-size: 28px;">zài... lǐ miàn</p>
+                        </div>
+                    </div>
+                    
+                    <div class="vocab-card" onclick="flipCard(this)">
+                        <div class="front">
+                            <div class="vocab-emoji">⬇️</div>
+                            <div class="vocab-word">UNDER</div>
+                            <p style="font-size: 20px; color: #95a5a6;">click me!</p>
+                        </div>
+                        <div class="back">
+                            <div class="vocab-emoji">⬇️</div>
+                            <div class="vocab-word">在...下面</div>
+                            <p style="font-size: 28px;">zài... xià miàn</p>
+                        </div>
+                    </div>
+                    
+                    <div class="vocab-card" onclick="flipCard(this)">
+                        <div class="front">
+                            <div class="vocab-emoji">↔️</div>
+                            <div class="vocab-word">NEXT TO</div>
+                            <p style="font-size: 20px; color: #95a5a6;">click me!</p>
+                        </div>
+                        <div class="back">
+                            <div class="vocab-emoji">↔️</div>
+                            <div class="vocab-word">在...旁边</div>
+                            <p style="font-size: 28px;">zài... páng biān</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">The book is ____ the desk.<br>📖 ⬆️ 🖊️</div>
+                <div class="quiz-options" id="quiz8">
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">on</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">in</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">under</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">next to</div>
+                </div>
+                <div class="quiz-feedback" id="feedback8"></div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Team Formation -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">10/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="emoji">👥</div>
+            <h1>Team Time! 小组时间!</h1>
+            
+            <div class="content-section">
+                <h3>🌟 Team Roles - Click to Learn!</h3>
+                <div class="interactive-grid">
+                    <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                        <div style="font-size: 72px;">🌟</div>
+                        <div style="font-size: 42px; font-weight: bold;">LEADER</div>
+                        <div class="hidden-content">
+                            Keep team on task<br>
+                            Ask teacher for help<br>
+                            保持小组专注
+                        </div>
+                    </div>
+                    
+                    <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                        <div style="font-size: 72px;">🎨</div>
+                        <div style="font-size: 42px; font-weight: bold;">ARTIST</div>
+                        <div class="hidden-content">
+                            Lead design ideas<br>
+                            Manage materials<br>
+                            负责设计和材料
+                        </div>
+                    </div>
+                    
+                    <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                        <div style="font-size: 72px;">🔢</div>
+                        <div style="font-size: 42px; font-weight: bold;">COUNTER</div>
+                        <div class="hidden-content">
+                            Write all numbers<br>
+                            Count items<br>
+                            负责数字和计数
+                        </div>
+                    </div>
+                    
+                    <div class="reveal-box" onclick="this.classList.toggle('revealed')">
+                        <div style="font-size: 72px;">🗣️</div>
+                        <div style="font-size: 42px; font-weight: bold;">SPEAKER</div>
+                        <div class="hidden-content">
+                            Lead presentation<br>
+                            Speak clearly<br>
+                            负责演讲
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section" style="background: #d5f4e6;">
+                <h3 style="text-align: center; color: #27ae60;">⭐ Remember!</h3>
+                <p style="text-align: center; font-size: 38px;">
+                    Everyone helps with everything!<br>
+                    <span style="color: #7f8c8d;">每个人都要参与所有任务！</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Slides 11-19: Planning, Examples, etc. -->
+        <!-- Slide 11 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">11/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>⏰ Planning Time!</h1>
+            <h2>计划时间！</h2>
+            
+            <div class="content-section" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+                <h3 style="text-align: center;">📋 What We Need to Plan:</h3>
+                <ul style="font-size: 42px; max-width: 900px; margin: 0 auto;">
+                    <li>What items do we want in our classroom?</li>
+                    <li>How many of each item?</li>
+                    <li>What colors should they be?</li>
+                    <li>Where will we put them?</li>
+                </ul>
+            </div>
+            
+            <div class="content-section">
+                <h3 style="text-align: center;">✏️ Use Your Planning Sheet!</h3>
+                <p style="text-align: center; font-size: 38px;">
+                    Work together with your team<br>
+                    和你的小组一起工作<br><br>
+                    Write at least <strong style="color: #e74c3c;">5-6 items</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 12 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">12/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>📝 Sentence Frames</h1>
+            <h2>How to Talk About Your Classroom</h2>
+            
+            <div class="content-section" style="background: #e3f2fd; padding: 50px;">
+                <div style="margin: 30px 0; padding: 30px; background: white; border-left: 6px solid #2196f3; border-radius: 10px;">
+                    <p style="font-size: 42px; margin: 0;">
+                        "In our classroom, there are <span style="color: #e74c3c; text-decoration: underline;">_____ (number)</span> <span style="color: #3498db; text-decoration: underline;">_____ (item)</span>."
+                    </p>
+                </div>
+                
+                <div style="margin: 30px 0; padding: 30px; background: white; border-left: 6px solid #4caf50; border-radius: 10px;">
+                    <p style="font-size: 42px; margin: 0;">
+                        "The <span style="color: #3498db; text-decoration: underline;">_____ (item)</span> is <span style="color: #e74c3c; text-decoration: underline;">_____ (color)</span>."
+                    </p>
+                </div>
+                
+                <div style="margin: 30px 0; padding: 30px; background: white; border-left: 6px solid #ff9800; border-radius: 10px;">
+                    <p style="font-size: 42px; margin: 0;">
+                        "The <span style="color: #3498db; text-decoration: underline;">_____ (item)</span> is <span style="color: #f39c12; text-decoration: underline;">next to</span> the <span style="color: #3498db; text-decoration: underline;">_____ (item)</span>."
+                    </p>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h3 style="text-align: center;">💡 Examples:</h3>
+                <p style="text-align: center; font-size: 38px;">
+                    "In our classroom, there are <strong>12 desks</strong>."<br>
+                    "The board is <strong>white</strong>."<br>
+                    "The bookcase is <strong>next to</strong> the window."
+                </p>
+            </div>
+        </div>
+
+        <!-- Slides 13-19: More content -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">13/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>🤔 Think About...</h1>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">What makes a good classroom?<br>什么是好教室？</div>
+                <div class="content-section" style="background: white; margin-top: 30px;">
+                    <ul style="font-size: 38px; max-width: 800px; margin: 0 auto;">
+                        <li>Lots of light? 很多光线？</li>
+                        <li>Comfortable chairs? 舒适的椅子？</li>
+                        <li>Books to read? 可以读的书？</li>
+                        <li>Space to move? 可以移动的空间？</li>
+                        <li>Computers for learning? 学习用的电脑？</li>
+                        <li>Colors that make us happy? 让我们开心的颜色？</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section" style="background: #fff3cd;">
+                <h3 style="text-align: center;">💡 Discussion:</h3>
+                <p style="text-align: center; font-size: 38px;">
+                    Talk with your team!<br>
+                    What do YOU want in your dream classroom?<br>
+                    <span style="color: #7f8c8d;">和你的小组讨论！你想要什么？</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Continue with slides 14-19... -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">14/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>✅ Teamwork Tips</h1>
+            
+            <div class="content-section">
+                <h3>🤝 How to Work Together:</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 30px;">
+                    <div style="background: #e8f5e9; padding: 30px; border-radius: 15px;">
+                        <p style="font-size: 42px; font-weight: bold; text-align: center;">✓ DO</p>
+                        <ul style="font-size: 32px; margin-top: 20px;">
+                            <li>Listen to everyone 听大家的</li>
+                            <li>Share ideas 分享想法</li>
+                            <li>Help each other 互相帮助</li>
+                            <li>Use English 用英语</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #ffebee; padding: 30px; border-radius: 15px;">
+                        <p style="font-size: 42px; font-weight: bold; text-align: center;">✗ DON'T</p>
+                        <ul style="font-size: 32px; margin-top: 20px;">
+                            <li>Work alone 独自工作</li>
+                            <li>Argue 争吵</li>
+                            <li>Be bossy 霸道</li>
+                            <li>Give up 放弃</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">15/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>📊 Example Planning Sheet</h1>
+            
+            <div style="background: #f7fafc; padding: 40px; border-radius: 20px; border: 3px solid #3498db; max-width: 1000px; margin: 40px auto;">
+                <h3 style="text-align: center; margin-bottom: 30px;">Team Stars ⭐</h3>
+                <div style="background: white; border: 2px solid #95a5a6; border-radius: 10px; padding: 20px;">
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 20px; padding: 15px; background: #ecf0f1; font-weight: bold; border-radius: 5px; margin-bottom: 15px;">
+                        <div style="font-size: 32px;">Item 物品</div>
+                        <div style="font-size: 32px;">Number 数量</div>
+                        <div style="font-size: 32px;">Color 颜色</div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 20px; padding: 15px; border-bottom: 2px dashed #bdc3c7; font-size: 28px;">
+                        <div>desk 课桌</div>
+                        <div>12</div>
+                        <div>brown 棕色</div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 20px; padding: 15px; border-bottom: 2px dashed #bdc3c7; font-size: 28px;">
+                        <div>chair 椅子</div>
+                        <div>14</div>
+                        <div>blue 蓝色</div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 20px; padding: 15px; border-bottom: 2px dashed #bdc3c7; font-size: 28px;">
+                        <div>bookcase 书架</div>
+                        <div>2</div>
+                        <div>white 白色</div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 20px; padding: 15px; font-size: 28px;">
+                        <div>computer 电脑</div>
+                        <div>6</div>
+                        <div>black 黑色</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">16/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>💭 More Ideas!</h1>
+            
+            <div class="content-section">
+                <h3 style="text-align: center;">🎨 Things You Can Add:</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 30px; text-align: center; font-size: 32px;">
+                    <div style="background: white; padding: 25px; border-radius: 15px; border: 3px solid #3498db;">
+                        📚<br>Reading Corner<br><span style="font-size: 24px; color: #7f8c8d;">阅读角</span>
+                    </div>
+                    <div style="background: white; padding: 25px; border-radius: 15px; border: 3px solid #e74c3c;">
+                        🎨<br>Art Supplies<br><span style="font-size: 24px; color: #7f8c8d;">美术用品</span>
+                    </div>
+                    <div style="background: white; padding: 25px; border-radius: 15px; border: 3px solid #f39c12;">
+                        🌱<br>Plants<br><span style="font-size: 24px; color: #7f8c8d;">植物</span>
+                    </div>
+                    <div style="background: white; padding: 25px; border-radius: 15px; border: 3px solid #27ae60;">
+                        🪟<br>Big Windows<br><span style="font-size: 24px; color: #7f8c8d;">大窗户</span>
+                    </div>
+                    <div style="background: white; padding: 25px; border-radius: 15px; border: 3px solid #9b59b6;">
+                        🎯<br>Game Area<br><span style="font-size: 24px; color: #7f8c8d;">游戏区</span>
+                    </div>
+                    <div style="background: white; padding: 25px; border-radius: 15px; border: 3px solid #e91e63;">
+                        🪟<br>Posters<br><span style="font-size: 24px; color: #7f8c8d;">海报</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">17/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>🎯 Quick Review Quiz!</h1>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">How do you say "有多少...?" in English?</div>
+                <div class="quiz-options" id="quiz9">
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">How many...?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">How much...?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">What color...?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Where is...?</div>
+                </div>
+                <div class="quiz-feedback" id="feedback9"></div>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">Which sentence is correct?</div>
+                <div class="quiz-options" id="quiz10">
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">There is 15 desks.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">There are 15 desks.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">There be 15 desks.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">There have 15 desks.</div>
+                </div>
+                <div class="quiz-feedback" id="feedback10"></div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">18/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>✅ Before We Finish...</h1>
+            
+            <div class="content-section">
+                <h3 style="text-align: center;">Check Your Planning Sheet:</h3>
+                <ul style="font-size: 42px; max-width: 800px; margin: 30px auto;">
+                    <li>Did you write 5-6 items? 写了5-6个物品吗？</li>
+                    <li>Did you write numbers? 写了数字吗？</li>
+                    <li>Did you write colors? 写了颜色吗？</li>
+                    <li>Did everyone participate? 每个人都参与了吗？</li>
+                </ul>
+            </div>
+            
+            <div class="content-section" style="background: #fff3cd;">
+                <h3 style="text-align: center;">📝 Homework:</h3>
+                <ul style="font-size: 38px; max-width: 800px; margin: 0 auto;">
+                    <li>Finish your planning sheet if not done</li>
+                    <li>Practice saying items in English</li>
+                    <li>Think about what colors you want</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">19/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <h1>🌟 You Did Great Today!</h1>
+            
+            <div class="content-section" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                <h3 style="text-align: center; font-size: 52px;">📚 Today We Learned:</h3>
+                <ul style="font-size: 42px; max-width: 900px; margin: 30px auto;">
+                    <li>School vocabulary words</li>
+                    <li>Numbers 11-20</li>
+                    <li>Colors in English</li>
+                    <li>Prepositions (on, in, under, next to)</li>
+                    <li>How to work in teams</li>
+                    <li>How to plan our classroom</li>
+                </ul>
+            </div>
+            
+            <div class="content-section">
+                <h3 style="text-align: center;">🎯 Look at Your Score!</h3>
+                <p style="text-align: center; font-size: 56px; font-weight: bold; color: #e74c3c;">
+                    ⭐ You earned: <span id="midScore">0</span> points so far!
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 20: Final -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-number">20/20</div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="emoji">🎨</div>
+            <h1>Great Work Today!</h1>
+            <h2>今天做得很好!</h2>
+            
+            <div class="content-section" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+                <h3 style="text-align: center;">📊 Today's Results:</h3>
+                <p style="text-align: center; font-size: 56px; font-weight: bold; color: #e74c3c;">
+                    ⭐ You earned: <span id="finalScore">0</span> points!
+                </p>
+            </div>
+            
+            <div class="content-section">
+                <h3>🎯 Next Time We Will:</h3>
+                <ul style="font-size: 42px; max-width: 800px; margin: 0 auto;">
+                    <li>Make our posters!</li>
+                    <li>Practice presentations</li>
+                    <li>Share with the class</li>
+                    <li>Have fun together!</li>
+                </ul>
+            </div>
+            
+            <p style="text-align: center; font-size: 52px; font-weight: bold; color: #e74c3c; margin-top: 40px;">
+                See you next time! 下次见! 👋
+            </p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="btn-prev" onclick="prevSlide()">◀ Previous</button>
+        <button class="btn-next" onclick="nextSlide()">Next ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let score = 0;
+        let selectedMatches = [];
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            slides[currentSlide].parentElement.scrollTop = 0;
+            updateFinalScore();
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        function checkAnswer(element, isCorrect) {
+            const parent = element.parentElement;
+            const options = parent.querySelectorAll('.quiz-option');
+            const feedbackId = parent.parentElement.querySelector('.quiz-feedback');
+            
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+            
+            if (isCorrect) {
+                element.classList.add('correct');
+                feedbackId.innerHTML = '🎉 Correct! 答对了！';
+                feedbackId.style.color = '#27ae60';
+                score += 10;
+                updateScore();
+            } else {
+                element.classList.add('wrong');
+                feedbackId.innerHTML = '❌ Try again! 再试一次！';
+                feedbackId.style.color = '#e74c3c';
+                setTimeout(() => {
+                    options.forEach(opt => {
+                        if (opt.onclick.toString().includes('true')) {
+                            opt.classList.add('correct');
+                        }
+                    });
+                }, 1000);
+            }
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+        }
+
+        function updateFinalScore() {
+            const finalScoreElements = document.querySelectorAll('#finalScore, #midScore');
+            finalScoreElements.forEach(el => el.textContent = score);
+        }
+
+        function selectMatch(element) {
+            const matchValue = element.dataset.match;
+            
+            if (element.classList.contains('matched')) return;
+            
+            if (selectedMatches.length === 0) {
+                element.classList.add('selected');
+                selectedMatches.push(element);
+            } else if (selectedMatches.length === 1) {
+                if (selectedMatches[0] === element) {
+                    element.classList.remove('selected');
+                    selectedMatches = [];
+                    return;
+                }
+                
+                element.classList.add('selected');
+                
+                if (selectedMatches[0].dataset.match === matchValue) {
+                    setTimeout(() => {
+                        selectedMatches[0].classList.remove('selected');
+                        selectedMatches[0].classList.add('matched');
+                        element.classList.remove('selected');
+                        element.classList.add('matched');
+                        score += 10;
+                        updateScore();
+                        selectedMatches = [];
+                    }, 500);
+                } else {
+                    setTimeout(() => {
+                        selectedMatches[0].classList.remove('selected');
+                        element.classList.remove('selected');
+                        selectedMatches = [];
+                    }, 1000);
+                }
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+    </script>
+</body>
+</html>
