@@ -119,23 +119,22 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Add typing effect to hero title (optional enhancement)
-const heroTitle = document.querySelector('.hero-title');
-if (heroTitle) {
-    const text = heroTitle.textContent;
-    heroTitle.textContent = '';
-    let i = 0;
-    
-    function typeWriter() {
-        if (i < text.length) {
-            heroTitle.textContent += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, 100);
-        }
+// Parallax effect for hero section
+window.addEventListener('scroll', () => {
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * 0.5;
+        hero.style.transform = `translateY(${rate}px)`;
     }
-    
-    // Start typing effect after a short delay
-    setTimeout(typeWriter, 500);
-}
+});
+
+// Enhanced scroll reveal animations
+const revealElements = document.querySelectorAll('.project-card, .skill-category, .stat-card');
+revealElements.forEach((element, index) => {
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(30px)';
+    element.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+});
 
 console.log('Personal website loaded successfully! 🚀');
