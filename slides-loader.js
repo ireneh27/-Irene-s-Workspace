@@ -15,42 +15,30 @@ function loadSlides() {
 
     // List of your slide files - UPDATE THIS LIST when you add new slides
     const slideFiles = [
-        {
-            filename: 'present-perfect.html',
-            title: 'Grammar Lesson: Present Perfect',
-            description: 'Interactive slides covering the present perfect tense with examples, practice exercises, and common usage patterns.',
-            tags: ['Grammar', 'Intermediate', 'Interactive']
-        },
-        {
-            filename: 'daily-routines.html',
-            title: 'Vocabulary: Daily Routines',
-            description: 'Beginner-level slides teaching vocabulary related to daily activities and routines with visual aids and practice exercises.',
-            tags: ['Vocabulary', 'Beginner', 'Visual']
-        },
-        {
-            filename: 'reading-skills.html',
-            title: 'Reading Comprehension Skills',
-            description: 'Slides focused on developing reading comprehension strategies including skimming, scanning, and inference techniques.',
-            tags: ['Reading', 'All Levels', 'Strategies']
-        },
-        {
-            filename: 'conversation.html',
-            title: 'Conversation Practice',
-            description: 'Interactive conversation prompts and discussion activities for intermediate and advanced students to practice speaking skills.',
-            tags: ['Speaking', 'Intermediate+', 'Discussion']
-        },
-        {
-            filename: 'writing-workshop.html',
-            title: 'Writing Workshop',
-            description: 'Step-by-step guidance on essay writing, including structure, organization, and advanced writing techniques.',
-            tags: ['Writing', 'Advanced', 'Essay Skills']
-        },
-        {
-            filename: 'pronunciation.html',
-            title: 'Pronunciation Guide',
-            description: 'Comprehensive pronunciation guide covering phonetics, common mistakes, and practice exercises for Chinese English learners.',
-            tags: ['Pronunciation', 'All Levels', 'Phonetics']
-        }
+    {
+        filename: 'Grade 2 Period 1.html',
+        title: 'Grade 2 - Period 1',
+        description: 'English lesson for Grade 2 students, Period 1 curriculum materials and activities.',
+        tags: ['Grade 2', 'Beginner', 'Classroom']
+    },
+    {
+        filename: 'Grade 2 Period 2.html',
+        title: 'Grade 2 - Period 2',
+        description: 'English lesson for Grade 2 students, Period 2 curriculum materials and activities.',
+        tags: ['Grade 2', 'Beginner', 'Classroom']
+    },
+    {
+        filename: 'interactive_reading_writing_lesson_ Reflect Unit 2.html',
+        title: 'Reading & Writing: Reflect Unit 2',
+        description: 'Interactive reading and writing activities with reflection exercises for Unit 2.',
+        tags: ['Reading', 'Writing', 'Interactive']
+    },
+    {
+        filename: 'irregular_verbs_learning.html',
+        title: 'Irregular Verbs Learning',
+        description: 'Learn and practice common irregular verbs with examples and exercises.',
+        tags: ['Grammar', 'Verbs', 'Practice']
+    }
         // ADD NEW SLIDES HERE - just copy the format above
         // Example:
         // {
