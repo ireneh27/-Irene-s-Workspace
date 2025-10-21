@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Automation System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #6366f1;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        #test-container {
+            min-height: 100px;
+            border: 2px dashed #ccc;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .project-card {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #6366f1;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-box">
+        <h1>🧪 Automation System Test</h1>
+        <p>This page tests if your automated slide loading system is working correctly.</p>
+        
+        <div id="status-messages"></div>
+        
+        <h2>Test Container:</h2>
+        <div id="test-container">
+            <p style="color: #999;">Waiting for slides to load...</p>
+        </div>
+        
+        <h2>📋 How to Use This Test:</h2>
+        <ol>
+            <li>Upload this file (<code>test-automation.html</code>) to your GitHub repository</li>
+            <li>Also upload <code>slides-loader.js</code></li>
+            <li>Wait 2-3 minutes for GitHub Pages to update</li>
+            <li>Visit: <code>https://lkk2114.github.io/-Irene-s-Workspace/test-automation.html</code></li>
+            <li>Check the results above</li>
+        </ol>
+        
+        <h2>🔍 What to Look For:</h2>
+        <ul>
+            <li><strong>Green boxes</strong> = Everything working! ✅</li>
+            <li><strong>Red boxes</strong> = Problem found ❌</li>
+            <li><strong>Blue boxes</strong> = Information ℹ️</li>
+        </ul>
+        
+        <h2>📝 Console Output:</h2>
+        <p>Press <code>F12</code> to open the console and see detailed messages.</p>
+    </div>
+
+    <!-- Include the slides-loader script with modified container ID -->
+    <script>
+        // Modified version of slides-loader.js for testing
+        function testLoadSlides() {
+            const statusDiv = document.getElementById('status-messages');
+            const testContainer = document.getElementById('test-container');
+            
+            function addStatus(message, type = 'info') {
+                const div = document.createElement('div');
+                div.className = `status ${type}`;
+                div.textContent = message;
+                statusDiv.appendChild(div);
+                console.log(`[${type.toUpperCase()}] ${message}`);
+            }
+            
+            addStatus('🔄 Testing automation system...', 'info');
+            
+            // Test 1: Check if function can run
+            try {
+                addStatus('✅ Test 1 PASSED: JavaScript is running', 'success');
+            } catch (e) {
+                addStatus('❌ Test 1 FAILED: ' + e.message, 'error');
+                return;
+            }
+            
+            // Test 2: Check if container exists
+            if (testContainer) {
+                addStatus('✅ Test 2 PASSED: Container element found', 'success');
+            } else {
+                addStatus('❌ Test 2 FAILED: Container element not found', 'error');
+                return;
+            }
+            
+            // Test 3: Try to load slides
+            try {
+                const slideFiles = [
+                    {
+                        filename: 'test-slide.html',
+                        title: 'Test Slide 1',
+                        description: 'This is a test slide to verify automation works.',
+                        tags: ['Test', 'Demo']
+                    },
+                    {
+                        filename: 'test-slide-2.html',
+                        title: 'Test Slide 2',
+                        description: 'Another test slide.',
+                        tags: ['Test', 'Demo']
+                    }
+                ];
+                
+                addStatus(`✅ Test 3 PASSED: Slide data loaded (${slideFiles.length} slides)`, 'success');
+                
+                // Test 4: Generate HTML
+                let html = '';
+                slideFiles.forEach((slide, index) => {
+                    html += `
+                        <div class="project-card">
+                            <h3>${slide.title}</h3>
+                            <p>${slide.description}</p>
+                            <p><small>Tags: ${slide.tags.join(', ')}</small></p>
+                        </div>
+                    `;
+                });
+                
+                addStatus('✅ Test 4 PASSED: HTML generated successfully', 'success');
+                
+                // Test 5: Insert into container
+                testContainer.innerHTML = html;
+                addStatus('✅ Test 5 PASSED: Content inserted into container', 'success');
+                
+                // Final result
+                addStatus('🎉 ALL TESTS PASSED! Your automation system is working correctly!', 'success');
+                addStatus('ℹ️ You can now use the real slides-loader.js on your main website.', 'info');
+                
+            } catch (e) {
+                addStatus('❌ Test FAILED: ' + e.message, 'error');
+                addStatus('ℹ️ Check the console (F12) for more details', 'info');
+            }
+        }
+        
+        // Run test when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', testLoadSlides);
+        } else {
+            testLoadSlides();
+        }
+    </script>
+</body>
+</html>

@@ -1,13 +1,17 @@
 // Auto-load slides from the slides folder
 // This script automatically displays all HTML files in the slides folder
 
-async function loadSlides() {
+function loadSlides() {
+    console.log('loadSlides function called');
+    
     const slidesContainer = document.getElementById('slides-container');
     
     if (!slidesContainer) {
-        console.log('Slides container not found');
+        console.error('Slides container not found! Make sure there is an element with id="slides-container"');
         return;
     }
+    
+    console.log('Slides container found!');
 
     // List of your slide files - UPDATE THIS LIST when you add new slides
     const slideFiles = [
@@ -48,12 +52,23 @@ async function loadSlides() {
             tags: ['Pronunciation', 'All Levels', 'Phonetics']
         }
         // ADD NEW SLIDES HERE - just copy the format above
+        // Example:
+        // {
+        //     filename: 'your-lesson.html',
+        //     title: 'Your Lesson Title',
+        //     description: 'Brief description of what students will learn',
+        //     tags: ['Category', 'Level', 'Topic']
+        // }
     ];
+
+    console.log(`Processing ${slideFiles.length} slides...`);
 
     // Generate HTML for each slide
     let slidesHTML = '';
     
-    slideFiles.forEach(slide => {
+    slideFiles.forEach((slide, index) => {
+        console.log(`Processing slide ${index + 1}: ${slide.title}`);
+        
         const tagsHTML = slide.tags.map(tag => 
             `<span class="tech-tag">${tag}</span>`
         ).join('');
@@ -80,10 +95,18 @@ async function loadSlides() {
         `;
     });
 
+    // Update the container
     slidesContainer.innerHTML = slidesHTML;
     
-    console.log(`Loaded ${slideFiles.length} slides successfully!`);
+    console.log(`✅ Successfully loaded ${slideFiles.length} slides!`);
+    console.log('Slides are now visible on the website.');
 }
 
-// Run when page loads
-document.addEventListener('DOMContentLoaded', loadSlides);
+// Run when the DOM is fully loaded
+if (document.readyState === 'loading') {
+    // Still loading, wait for DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', loadSlides);
+} else {
+    // DOM already loaded, run immediately
+    loadSlides();
+}
