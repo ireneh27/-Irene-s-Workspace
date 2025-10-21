@@ -28,7 +28,7 @@ function loadMaterials() {
         {
             title: 'Oxford Discover',
             publisher: 'Oxford University Press',
-            publisherLink: 'https://elt.oup.com/student/oxforddiscover/',
+            publisherLink: 'https://elt.oup.com/catalogue/items/global/young_learners/oxford_discover_second_edition/?cc=us&selLanguage=en&mode=hub',
             description: 'A six-level American English course that uses Big Questions to engage students in 21st century learning.',
             coverImage: 'images/discover.jpg',  // Put image in images/ folder
             tags: ['Coursebook', 'Elementary', 'Oxford']
