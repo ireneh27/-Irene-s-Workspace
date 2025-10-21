@@ -30,7 +30,7 @@ function loadMaterials() {
             publisher: 'Oxford University Press',
             publisherLink: 'https://elt.oup.com/student/oxforddiscover/',
             description: 'A six-level American English course that uses Big Questions to engage students in 21st century learning.',
-            coverImage: 'images/oxford-discover.jpg',  // Put image in images/ folder
+            coverImage: 'images/discover.jpg',  // Put image in images/ folder
             tags: ['Coursebook', 'Elementary', 'Oxford']
         },
         {
@@ -38,7 +38,7 @@ function loadMaterials() {
             publisher: 'Cambridge University Press',
             publisherLink: 'https://www.cambridge.org/elt',
             description: 'Comprehensive series for young learners with engaging activities and clear progression.',
-            coverImage: 'images/cambridge-young.jpg',  // Put image in images/ folder
+            coverImage: 'images/power-up.jpg',  // Put image in images/ folder
             tags: ['Coursebook', 'Young Learners', 'Cambridge']
         },
         {
@@ -46,7 +46,7 @@ function loadMaterials() {
             publisher: 'National Geographic Learning',
             publisherLink: 'https://ngl.cengage.com/',
             description: 'Bring the world to the classroom with authentic National Geographic content.',
-            coverImage: 'images/nat-geo.jpg',  // Put image in images/ folder
+            coverImage: 'images/reflect-1.jpg',  // Put image in images/ folder
             tags: ['Content-Based', 'All Levels', 'Authentic']
         }
         // ADD MORE BOOKS HERE:
