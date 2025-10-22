@@ -139,7 +139,7 @@ function loadSlides() {
             title: 'Irregular Verbs Learning',
             description: 'Learn and practice common irregular verbs with examples and exercises.',
             tags: ['Grammar', 'Verbs', 'Practice']
-        }    
+        },   
         {
             filename: 'parenting_assessment.html',
             title: '育儿风格深度评估',
