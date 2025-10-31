@@ -343,9 +343,12 @@ function loadResources() {
         // }
     ];
 
+    // Limit resources to first 5 categories (1 row)
+    const resourcesToShow = resourceCategories.slice(0, 5);
+    
     let resourcesHTML = '';
     
-    resourceCategories.forEach((category, index) => {
+    resourcesToShow.forEach((category, index) => {
         console.log(`  Processing resource category ${index + 1}: ${category.category}`);
         
         const websitesHTML = category.websites.map(site => 
