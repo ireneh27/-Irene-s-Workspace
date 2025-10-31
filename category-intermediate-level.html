@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Category slides - Detailed lesson slides information">
+    <title>Category Slides - Irene's Workspace</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">Irene's Workspace</a>
+                <div class="nav-menu" id="navMenu">
+                    <a href="index.html#materials" class="nav-link">Teaching Materials</a>
+                    <a href="index.html#lessons" class="nav-link">Lesson Slides</a>
+                    <a href="index.html#resources" class="nav-link">Resources</a>
+                    <a href="index.html#contact" class="nav-link">Contact</a>
+                </div>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Category Content Section -->
+    <section class="section" style="padding-top: 8rem;">
+        <div class="container">
+            <a href="index.html#lessons" class="btn btn-outline" style="margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+                Back to Slides
+            </a>
+            
+            <h1 class="section-title" id="category-title">Loading...</h1>
+            <p class="category-description" id="category-description" style="text-align: center; margin-bottom: 3rem; color: var(--text-secondary);">Loading category information...</p>
+            
+            <div class="projects-grid" id="category-slides-container">
+                <div class="project-card" style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                    <p style="color: #6b7280; font-size: 1.125rem;">Loading slides...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Irene's English Teaching Workspace. Built with passion for education.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="category-loader.js"></script>
+</body>
+</html>
+

@@ -213,6 +213,10 @@ function loadSlides() {
         // Only show the latest 3 slides per category
         const slidesToShow = category.slides.slice(-3);
         
+        // Create URL-friendly category slug
+        const categorySlug = category.category.toLowerCase().replace(/\s+/g, '-');
+        const categoryPageUrl = `category-${categorySlug}.html`;
+        
         console.log(`  Processing category ${categoryIndex + 1}: ${category.category} (showing ${slidesToShow.length} of ${category.slides.length} slides)`);
         
         slidesHTML += `
@@ -222,6 +226,13 @@ function loadSlides() {
                         <h3 class="category-title">${category.category}</h3>
                         <p class="category-description">${category.description}</p>
                     </div>
+                    <a href="${categoryPageUrl}" class="category-link">
+                        View All (${category.slides.length})
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14"></path>
+                            <path d="M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
                 </div>
                 <div class="category-slides-grid">
         `;
