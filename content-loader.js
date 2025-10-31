@@ -119,7 +119,6 @@ function loadSlides() {
     const slideCategories = [
         {
             category: 'Basic Skills',
-            icon: '🎯',
             description: 'Foundation building blocks for English learners',
             slides: [
                 {
@@ -133,7 +132,6 @@ function loadSlides() {
         },
         {
             category: 'Primary Level',
-            icon: '🌟',
             description: 'Elementary level lessons for young learners',
             slides: [
                 {
@@ -165,7 +163,6 @@ function loadSlides() {
         },
         {
             category: 'Intermediate Level',
-            icon: '📚',
             description: 'Intermediate lessons for developing language skills',
             slides: [
                 {
@@ -179,7 +176,6 @@ function loadSlides() {
         },
         {
             category: 'Advanced Level',
-            icon: '🚀',
             description: 'Advanced lessons for proficient learners',
             slides: [
                 // ADD ADVANCED LEVEL SLIDES HERE
@@ -193,7 +189,6 @@ function loadSlides() {
         },
         {
             category: 'Family Education',
-            icon: '👨‍👩‍👧‍👦',
             description: 'Resources and materials for family learning and parenting',
             slides: [
                 {
