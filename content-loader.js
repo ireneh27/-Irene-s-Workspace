@@ -70,30 +70,32 @@ function loadMaterials() {
         ).join('');
 
         materialsHTML += `
-            <div class="project-card book-card">
-                <div class="book-cover-container">
-                    <img src="${material.coverImage}" alt="${material.title} cover" class="book-cover" onerror="this.src='images/placeholder-book.jpg'">
-                </div>
-                <div class="book-info">
-                    <div class="project-header">
-                        <h3>${material.title}</h3>
-                        <div class="project-links">
-                            <a href="${material.publisherLink}" target="_blank" class="project-link" aria-label="Publisher Website">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                            </a>
+            <a href="${material.publisherLink}" target="_blank" class="card-link book-card-link" aria-label="Visit ${material.title} publisher website">
+                <div class="project-card book-card">
+                    <div class="book-cover-container">
+                        <img src="${material.coverImage}" alt="${material.title} cover" class="book-cover" onerror="this.src='images/placeholder-book.jpg'">
+                    </div>
+                    <div class="book-info">
+                        <div class="project-header">
+                            <h3>${material.title}</h3>
+                            <div class="project-links">
+                                <div class="project-link" aria-label="Publisher Website">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="publisher-name">Publisher: ${material.publisher}</p>
+                        <p class="project-description">${material.description}</p>
+                        <div class="project-tech">
+                            ${tagsHTML}
                         </div>
                     </div>
-                    <p class="publisher-name">Publisher: ${material.publisher}</p>
-                    <p class="project-description">${material.description}</p>
-                    <div class="project-tech">
-                        ${tagsHTML}
-                    </div>
                 </div>
-            </div>
+            </a>
         `;
     });
 
@@ -223,16 +225,18 @@ function loadSlides() {
             <div class="slide-category-section">
                 <div class="category-header">
                     <div class="category-info">
-                        <h3 class="category-title">${category.category}</h3>
+                        <a href="${categoryPageUrl}" class="category-title-link">
+                            <h3 class="category-title">
+                                ${category.category}
+                                <span class="slide-count">(${category.slides.length})</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="title-arrow">
+                                    <path d="M5 12h14"></path>
+                                    <path d="M12 5l7 7-7 7"></path>
+                                </svg>
+                            </h3>
+                        </a>
                         <p class="category-description">${category.description}</p>
                     </div>
-                    <a href="${categoryPageUrl}" class="category-link">
-                        View All (${category.slides.length})
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14"></path>
-                            <path d="M12 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
                 </div>
                 <div class="category-slides-grid">
         `;
@@ -245,24 +249,26 @@ function loadSlides() {
             ).join('');
 
             slidesHTML += `
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>${slide.title}</h3>
-                        <div class="project-links">
-                            <a href="slides/${encodeURIComponent(slide.filename)}" class="project-link" aria-label="View Slides">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                            </a>
+                <a href="slides/${encodeURIComponent(slide.filename)}" class="card-link slide-card-link" aria-label="View ${slide.title}">
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3>${slide.title}</h3>
+                            <div class="project-links">
+                                <div class="project-link" aria-label="View Slides">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="project-description">${slide.description}</p>
+                        <div class="project-tech">
+                            ${tagsHTML}
                         </div>
                     </div>
-                    <p class="project-description">${slide.description}</p>
-                    <div class="project-tech">
-                        ${tagsHTML}
-                    </div>
-                </div>
+                </a>
             `;
         });
 
