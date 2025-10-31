@@ -343,15 +343,18 @@ function loadResources() {
         // }
     ];
 
-    // Limit resources to first 5 categories (1 row)
-    const resourcesToShow = resourceCategories.slice(0, 5);
+    // Limit resources to first 3 categories with 3 websites each
+    const resourcesToShow = resourceCategories.slice(0, 3);
     
     let resourcesHTML = '';
     
     resourcesToShow.forEach((category, index) => {
         console.log(`  Processing resource category ${index + 1}: ${category.category}`);
         
-        const websitesHTML = category.websites.map(site => 
+        // Limit to 3 websites per category
+        const websitesToShow = category.websites.slice(0, 3);
+        
+        const websitesHTML = websitesToShow.map(site => 
             `<a href="${site.url}" target="_blank" class="skill-tag resource-link" rel="noopener noreferrer">
                 ${site.name}
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 4px;">
