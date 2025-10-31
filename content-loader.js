@@ -215,12 +215,14 @@ function loadSlides() {
             return;
         }
 
-        console.log(`  Processing category ${categoryIndex + 1}: ${category.category} (${category.slides.length} slides)`);
+        // Only show the latest 3 slides per category
+        const slidesToShow = category.slides.slice(-3);
+        
+        console.log(`  Processing category ${categoryIndex + 1}: ${category.category} (showing ${slidesToShow.length} of ${category.slides.length} slides)`);
         
         slidesHTML += `
             <div class="slide-category-section">
                 <div class="category-header">
-                    <div class="category-icon">${category.icon}</div>
                     <div class="category-info">
                         <h3 class="category-title">${category.category}</h3>
                         <p class="category-description">${category.description}</p>
@@ -229,7 +231,7 @@ function loadSlides() {
                 <div class="category-slides-grid">
         `;
 
-        category.slides.forEach((slide, slideIndex) => {
+        slidesToShow.forEach((slide, slideIndex) => {
             console.log(`    Processing slide ${slideIndex + 1}: ${slide.title}`);
             
             const tagsHTML = slide.tags.map(tag => 
