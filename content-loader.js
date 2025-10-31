@@ -291,57 +291,43 @@ function loadResources() {
         return;
     }
 
-    // ADD YOUR RESOURCE LINKS HERE
-    // Popular English learning websites
+    // High-quality English learning resources
+    // Curated selection of reputable, educational, and free resources
     const resourceCategories = [
         {
-            category: 'Interactive Learning Websites',
+            category: 'Official Learning Platforms',
             websites: [
-                { name: 'Duolingo', url: 'https://www.duolingo.com' },
                 { name: 'BBC Learning English', url: 'https://www.bbc.co.uk/learningenglish' },
-                { name: 'British Council LearnEnglish Kids', url: 'https://learnenglishkids.britishcouncil.org' },
-                { name: 'Starfall', url: 'https://www.starfall.com' },
-                { name: 'ABCmouse', url: 'https://www.abcmouse.com' }
+                { name: 'British Council LearnEnglish', url: 'https://learnenglish.britishcouncil.org' },
+                { name: 'British Council LearnEnglish Kids', url: 'https://learnenglishkids.britishcouncil.org' }
             ]
         },
         {
-            category: 'Grammar & Vocabulary Practice',
+            category: 'Grammar & Vocabulary',
             websites: [
                 { name: 'Cambridge English', url: 'https://www.cambridgeenglish.org' },
-                { name: 'Grammarly Blog', url: 'https://www.grammarly.com/blog' },
-                { name: 'Perfect English Grammar', url: 'https://www.perfect-english-grammar.com' },
-                { name: 'English Grammar Online', url: 'https://www.ego4u.com' },
-                { name: 'Vocabulary.com', url: 'https://www.vocabulary.com' }
+                { name: 'Perfect English Grammar', url: 'https://www.perfect-english-grammar.com' }
             ]
         },
         {
             category: 'Listening & Speaking',
             websites: [
                 { name: 'VOA Learning English', url: 'https://learningenglish.voanews.com' },
-                { name: 'ESL Pod', url: 'https://www.eslpod.com' },
-                { name: 'TED-Ed', url: 'https://ed.ted.com' },
-                { name: 'Randall\'s ESL Cyber Listening Lab', url: 'https://www.esl-lab.com' },
-                { name: 'Elllo', url: 'https://www.elllo.org' }
+                { name: 'TED-Ed', url: 'https://ed.ted.com' }
             ]
         },
         {
-            category: 'Reading Resources',
+            category: 'Reading & Literature',
             websites: [
-                { name: 'Storyline Online', url: 'https://www.storylineonline.net' },
                 { name: 'Oxford Owl', url: 'https://www.oxfordowl.co.uk' },
-                { name: 'Epic! Books for Kids', url: 'https://www.getepic.com' },
-                { name: 'International Children\'s Digital Library', url: 'http://www.childrenslibrary.org' },
-                { name: 'ReadWorks', url: 'https://www.readworks.org' }
+                { name: 'Storyline Online', url: 'https://www.storylineonline.net' }
             ]
         },
         {
-            category: 'Games & Activities',
+            category: 'Interactive Activities',
             websites: [
-                { name: 'Fun English Games', url: 'https://www.funenglishgames.com' },
-                { name: 'ESL Games Plus', url: 'https://www.eslgamesplus.com' },
                 { name: 'Cambridge English Games', url: 'https://www.cambridgeenglish.org/learning-english/games-social/' },
-                { name: 'ESL Kids Games', url: 'https://www.eslkidsgames.com' },
-                { name: 'Digital Dialects', url: 'https://www.digitaldialects.com' }
+                { name: 'ESL Games Plus', url: 'https://www.eslgamesplus.com' }
             ]
         }
         // ADD MORE CATEGORIES HERE:
