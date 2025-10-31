@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 2: Plan & Design - Healthy Snack Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .slide-content {
+            background: white;
+            border-radius: 30px;
+            padding: 35px 40px;
+            max-width: 1200px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        h1 {
+            color: #1976d2;
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #f57c00;
+            font-size: 2.2em;
+            margin: 20px 0 15px;
+            text-align: center;
+        }
+        
+        h3 {
+            color: #555;
+            font-size: 1.8em;
+            margin: 15px 0;
+        }
+        
+        p, li {
+            font-size: 1.6em;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+        
+        .emoji {
+            font-size: 3em;
+            margin: 0 10px;
+        }
+        
+        .step-box {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 15px 0;
+            font-size: 1.5em;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .step-box:hover {
+            transform: scale(1.03);
+        }
+        
+        .vocab-card {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 12px 0;
+            font-size: 1.4em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .vocab-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .interactive-button {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.8em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+        }
+        
+        .interactive-button:hover {
+            background: #1976d2;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.6);
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+        
+        .nav-button {
+            background: white;
+            border: 3px solid #2196f3;
+            color: #2196f3;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .nav-button:hover {
+            background: #2196f3;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .slide-number {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2196f3;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        ul li::before {
+            content: "✓ ";
+            color: #2196f3;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+        
+        .highlight {
+            background: #fff9c4;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .example-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            font-size: 1.5em;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .timer {
+            background: #ff9800;
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 15px 0;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+        }
+        
+        .activity-box {
+            background: #e3f2fd;
+            border: 5px solid #2196f3;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 15px 0;
+        }
+        
+        .teacher-note {
+            display: none;
+        }
+        
+        .chinese {
+            color: #333;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        
+        .checklist {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 20px;
+            border: 3px dashed #4caf50;
+        }
+        
+        .checklist-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            font-size: 1.6em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .checklist-item:hover {
+            background: #c8e6c9;
+            transform: translateX(10px);
+        }
+        
+        .price-example {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .design-tip {
+            background: #f3e5f5;
+            border: 3px solid #9c27b0;
+            padding: 18px;
+            border-radius: 15px;
+            margin: 12px 0;
+        }
+        
+        /* Image modal for vocabulary */
+        .image-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        .image-modal-overlay.active {
+            display: flex;
+        }
+        .image-modal-content {
+            background: #fff;
+            border-radius: 20px;
+            max-width: 95vw;
+            max-height: 95vh;
+            overflow: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            padding: 20px 20px 10px 20px;
+        }
+        .image-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .image-modal-title {
+            font-size: 1.6em;
+            color: #333;
+            font-weight: bold;
+        }
+        .modal-close {
+            background: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 16px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .image-grid { /* kept for backward compatibility */ }
+        .image-iframe {
+            width: 90vw;
+            height: 80vh;
+            border: 0;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-number" id="slideNumber">Slide 1 / 16</div>
+    
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active" id="slide1">
+            <div class="slide-content">
+                <h1>🏪 Let's Design Our Shop! 🎨</h1>
+                <h2>Class 2: Plan & Design</h2>
+                <p style="text-align: center; font-size: 2.2em; margin-top: 40px;">
+                    <span class="emoji">👋</span> Welcome Back! <span class="emoji">🎉</span>
+                </p>
+                <p style="text-align: center; font-size: 1.8em; color: #666;">
+                    Today we become <span class="highlight">Shop Designers!</span>
+                </p>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Greet students warmly. Quick review of Class 1 survey results.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Lesson Objectives -->
+        <div class="slide" id="slide2">
+            <div class="slide-content">
+                <h1>📋 Today's Mission!</h1>
+                <h3>By the end of class, you will:</h3>
+                <ul style="font-size: 1.8em;">
+                    <li>Use your survey results <span class="emoji">📊</span></li>
+                    <li>Choose 6-8 snacks for your menu <span class="emoji">🍎</span></li>
+                    <li>Decide good prices <span class="emoji">💰</span></li>
+                    <li>Make your menu BEAUTIFUL <span class="emoji">🎨</span></li>
+                    <li>Create a marketing plan <span class="emoji">📢</span></li>
+                </ul>
+                <div class="timer">⏰ 40 Minutes</div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Read objectives. Ask: "Who remembers their top 3 snacks?"
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Review Survey Results -->
+        <div class="slide" id="slide3">
+            <div class="slide-content">
+                <h1>📊 What Did We Learn?</h1>
+                <h2>Look at your survey results!</h2>
+                <div class="example-grid">
+                    <div class="example-box">
+                        <h3 style="margin-bottom: 20px;">Questions to Ask:</h3>
+                        <p style="font-size: 0.9em;">What snacks got the MOST votes? 🥇</p>
+                    </div>
+                    <div class="example-box">
+                        <h3 style="margin-bottom: 20px;">Think About:</h3>
+                        <p style="font-size: 0.9em;">What price did most students choose? 💰</p>
+                    </div>
+                </div>
+                <div class="activity-box">
+                    <p style="text-align: center; font-size: 1.8em;">
+                        <strong>If 20 kids like apples</strong> → Put apples on your menu! ✅<br>
+                        <strong>If only 2 kids like something</strong> → Maybe don't use it ❌
+                    </p>
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Have 2-3 teams share their top results quickly.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: The 4 Steps -->
+        <div class="slide" id="slide4">
+            <div class="slide-content">
+                <h1>✨ 4 Steps to a Great Shop!</h1>
+                <div class="step-box" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <h3>📊 Step 1: Look at Your Survey</h3>
+                    <p>Use the data you collected!</p>
+                </div>
+                <div class="step-box" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                    <h3>🍎 Step 2: Choose 6-8 Snacks</h3>
+                    <p>Pick popular and healthy options!</p>
+                </div>
+                <div class="step-box" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <h3>💰 Step 3: Choose Prices</h3>
+                    <p>Not too high! Not too low!</p>
+                </div>
+                <div class="step-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <h3>🎨 Step 4: Make It Pretty!</h3>
+                    <p>Colors! Pictures! Neat writing!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: New Vocabulary -->
+        <div class="slide" id="slide5">
+            <div class="slide-content">
+                <h1>📚 New Words for Today!</h1>
+                <div class="vocab-card" onclick="playWord('menu')">
+                    <strong style="font-size: 1.5em;">Menu</strong> /ˈmenjuː/ <span class="chinese">(菜单)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">A list of food and prices</p>
+                </div>
+                <div class="vocab-card" onclick="playWord('price')">
+                    <strong style="font-size: 1.5em;">Price</strong> /praɪs/ <span class="chinese">(价格)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">How much money something costs</p>
+                </div>
+                <div class="vocab-card" onclick="playWord('design')">
+                    <strong style="font-size: 1.5em;">Design</strong> /dɪˈzaɪn/ <span class="chinese">(设计)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Make something look nice</p>
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Say each word 3 times. Students repeat. Show examples!
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: More Vocabulary -->
+        <div class="slide" id="slide6">
+            <div class="slide-content">
+                <h1>📚 More New Words!</h1>
+                <div class="vocab-card" onclick="playWord('customer')">
+                    <strong style="font-size: 1.5em;">Customer</strong> /ˈkʌstəmər/ <span class="chinese">(顾客)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">A person who buys things</p>
+                </div>
+                <div class="vocab-card" onclick="playWord('attractive')">
+                    <strong style="font-size: 1.5em;">Attractive</strong> /əˈtræktɪv/ <span class="chinese">(吸引人的)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Pretty; makes people want to look</p>
+                </div>
+                <div class="activity-box">
+                    <h3 style="color: #1976d2;">Practice Sentences:</h3>
+                    <p style="font-size: 1.6em;">"Our <strong>menu</strong> has good <strong>prices</strong>!"</p>
+                    <p style="font-size: 1.6em;">"<strong>Customers</strong> will love our <strong>attractive design</strong>!"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Language Patterns -->
+        <div class="slide" id="slide7">
+            <div class="slide-content">
+                <h1>💬 Useful Sentences!</h1>
+                <h2>Learn these patterns:</h2>
+                <div class="design-tip">
+                    <p style="font-size: 1.8em; margin: 15px 0;">
+                        <strong>"_____ is healthier than _____."</strong>
+                    </p>
+                    <p style="font-size: 1.5em; color: #666; margin-left: 30px;">
+                        Example: Apples are healthier than candy.
+                    </p>
+                </div>
+                <div class="design-tip">
+                    <p style="font-size: 1.8em; margin: 15px 0;">
+                        <strong>"It costs _____ yuan."</strong>
+                    </p>
+                    <p style="font-size: 1.5em; color: #666; margin-left: 30px;">
+                        Example: It costs 5 yuan.
+                    </p>
+                </div>
+                <div class="design-tip">
+                    <p style="font-size: 1.8em; margin: 15px 0;">
+                        <strong>"You should buy this because _____."</strong>
+                    </p>
+                    <p style="font-size: 1.5em; color: #666; margin-left: 30px;">
+                        Example: You should buy this because it's healthy and yummy!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Choosing Snacks -->
+        <div class="slide" id="slide8">
+            <div class="slide-content">
+                <h1>🍎 How to Choose Snacks</h1>
+                <div class="checklist">
+                    <h3 style="color: #2c5f2d; margin-bottom: 20px;">Your snacks should be:</h3>
+                    <div class="checklist-item">✅ Popular (kids like them!)</div>
+                    <div class="checklist-item">✅ Healthy (follow the 3 rules!)</div>
+                    <div class="checklist-item">✅ Different types (not all fruit!)</div>
+                    <div class="checklist-item">✅ Available (you can buy them!)</div>
+                </div>
+                <h2 style="color: #f57c00; margin-top: 30px;">Aim for: 6-8 snacks!</h2>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Show example: "If your team chooses 3 fruits, 2 nuts, 2 dairy, 1 grain = 8 snacks! Good variety!"
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Variety is Important -->
+        <div class="slide" id="slide9">
+            <div class="slide-content">
+                <h1>🌈 Mix Different Types!</h1>
+                <div class="example-grid">
+                    <div class="example-box" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+                        <h3>❌ Not Good</h3>
+                        <p style="font-size: 0.9em; margin-top: 20px;">
+                            🍎 Apple<br>
+                            🍌 Banana<br>
+                            🍊 Orange<br>
+                            🍇 Grapes<br>
+                            🍓 Strawberries<br>
+                            (All fruit! Boring!)
+                        </p>
+                    </div>
+                    <div class="example-box" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                        <h3>✅ Good!</h3>
+                        <p style="font-size: 0.9em; margin-top: 20px;">
+                            🍎 Apple<br>
+                            🥜 Nuts<br>
+                            🧁 Yogurt<br>
+                            🍘 Crackers<br>
+                            🧀 Cheese<br>
+                            (Different types! Exciting!)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Pricing Guide -->
+        <div class="slide" id="slide10">
+            <div class="slide-content">
+                <h1>💰 Choosing Good Prices</h1>
+                <div class="price-example">
+                    <p>Good Price Range:</p>
+                    <p style="font-size: 2.5em; margin: 20px 0;">¥2 - ¥8</p>
+                </div>
+                <div class="example-grid">
+                    <div class="example-box" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);">
+                        <h3>❌ Too High</h3>
+                        <p style="margin-top: 20px;">¥15 for an apple</p>
+                        <p style="font-size: 0.8em;">(Students can't afford!)</p>
+                    </div>
+                    <div class="example-box" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>❌ Too Low</h3>
+                        <p style="margin-top: 20px;">¥0.50 for nuts</p>
+                        <p style="font-size: 0.8em;">(Not realistic!)</p>
+                    </div>
+                </div>
+                <div class="activity-box">
+                    <h3 style="text-align: center; color: #2196f3;">Think about:</h3>
+                    <p style="text-align: center; font-size: 1.6em;">What price did most students choose in your survey? 🤔</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Menu Design Tips -->
+        <div class="slide" id="slide11">
+            <div class="slide-content">
+                <h1>🎨 Make Your Menu BEAUTIFUL!</h1>
+                <div class="design-tip">
+                    <h3 style="color: #9c27b0;">🌈 Use Colors!</h3>
+                    <p style="font-size: 1.5em;">Make it bright and happy!</p>
+                </div>
+                <div class="design-tip">
+                    <h3 style="color: #9c27b0;">🖼️ Draw Pictures!</h3>
+                    <p style="font-size: 1.5em;">Pictures help people understand!</p>
+                </div>
+                <div class="design-tip">
+                    <h3 style="color: #9c27b0;">✍️ Write Neatly!</h3>
+                    <p style="font-size: 1.5em;">Everyone should be able to read it!</p>
+                </div>
+                <div class="design-tip">
+                    <h3 style="color: #9c27b0;">💡 Be Creative!</h3>
+                    <p style="font-size: 1.5em;">Make YOUR shop special!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Shop Name Ideas -->
+        <div class="slide" id="slide12">
+            <div class="slide-content">
+                <h1>🏪 Choose a Shop Name!</h1>
+                <h3 style="text-align: center; color: #666;">Your shop needs a FUN name!</h3>
+                <div class="activity-box">
+                    <h3 style="color: #1976d2; margin-bottom: 20px;">Examples:</h3>
+                    <ul style="font-size: 1.8em;">
+                        <li>🍎 The Healthy Corner</li>
+                        <li>🌟 Super Snack Shop</li>
+                        <li>💪 Strong Kids Snacks</li>
+                        <li>🌈 Rainbow Healthy Shop</li>
+                        <li>🍓 Fresh & Yummy</li>
+                    </ul>
+                </div>
+                <h2 style="color: #f57c00; margin-top: 30px;">Brainstorm with your team! 💭</h2>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Give teams 3 minutes to brainstorm names. Share ideas!
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Marketing Plan -->
+        <div class="slide" id="slide13">
+            <div class="slide-content">
+                <h1>📢 Marketing Plan!</h1>
+                <h2>Make students WANT to buy from YOUR shop!</h2>
+                <div class="activity-box">
+                    <h3 style="color: #2c5f2d;">Think about:</h3>
+                    <p style="font-size: 1.8em; margin: 15px 0;">
+                        🤔 Why is YOUR shop special?<br>
+                        🤔 What makes YOUR shop better?<br>
+                        🤔 Why should students choose YOUR shop?
+                    </p>
+                </div>
+                <div class="example-box">
+                    <h3>Example Reasons:</h3>
+                    <p style="font-size: 0.9em;">✨ "We have the FRESHEST snacks!"<br>
+                    💰 "Best prices in school!"<br>
+                    🌈 "Most colorful and fun menu!"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Work Time -->
+        <div class="slide" id="slide14">
+            <div class="slide-content">
+                <h1>🎨 Design Time!</h1>
+                <h2>Create your menu with your team!</h2>
+                <div class="checklist">
+                    <h3 style="color: #2c5f2d; margin-bottom: 20px;">Remember to include:</h3>
+                    <div class="checklist-item">✅ Shop name</div>
+                    <div class="checklist-item">✅ 6-8 snacks</div>
+                    <div class="checklist-item">✅ Prices for each snack</div>
+                    <div class="checklist-item">✅ Why each snack is healthy</div>
+                    <div class="checklist-item">✅ Pictures or drawings</div>
+                    <div class="checklist-item">✅ Colors!</div>
+                    <div class="checklist-item">✅ Marketing slogan</div>
+                </div>
+                <div class="timer">⏰ 25 Minutes - GO!</div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Circulate among teams. Help with English. Encourage creativity! Local teacher provides materials.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Gallery Walk -->
+        <div class="slide" id="slide15">
+            <div class="slide-content">
+                <h1>👀 Gallery Walk!</h1>
+                <h2>Look at other teams' menus!</h2>
+                <div class="activity-box">
+                    <h3 style="color: #1976d2; margin-bottom: 20px;">Instructions:</h3>
+                    <ul style="font-size: 1.8em;">
+                        <li>Walk around the classroom 🚶</li>
+                        <li>Look at every team's menu 👀</li>
+                        <li>Find 3 things you like ❤️</li>
+                        <li>Be respectful and quiet 🤫</li>
+                    </ul>
+                </div>
+                <div class="timer">⏰ 5 Minutes</div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Play quiet music. Students walk clockwise. After, ask: "What did you see that was creative?"
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Closing -->
+        <div class="slide" id="slide16">
+            <div class="slide-content">
+                <h1>🎉 Excellent Work Today!</h1>
+                <h2>You Created:</h2>
+                <ul style="font-size: 2em;">
+                    <li>A complete menu! 📋</li>
+                    <li>Good prices! 💰</li>
+                    <li>A marketing plan! 📢</li>
+                    <li>Beautiful designs! 🎨</li>
+                </ul>
+                <h2 style="color: #f57c00; margin-top: 50px;">Next Class:</h2>
+                <p style="font-size: 2em; text-align: center;">We will PERFORM and PRESENT! 🎭</p>
+                <p style="font-size: 1.8em; text-align: center; color: #666; margin-top: 20px;">
+                    Practice your role play at home!
+                </p>
+                <p style="text-align: center; font-size: 3em; margin-top: 30px;">👋 Great job! See you next time! 🌟</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vocabulary Images Modal -->
+    <div class="image-modal-overlay" id="imageModal" onclick="if(event.target===this){closeImageModal();}">
+        <div class="image-modal-content">
+            <div class="image-modal-header">
+                <div class="image-modal-title" id="imageModalTitle">Images</div>
+                <button class="modal-close" onclick="closeImageModal()">Close ✖</button>
+            </div>
+            <div class="image-grid" id="imageGrid"></div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">⬅️ Previous</button>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next ➡️</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 16;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n > totalSlides) currentSlide = totalSlides;
+            if (n < 1) currentSlide = 1;
+            
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            slides[currentSlide - 1].classList.add('active');
+            
+            document.getElementById('slideNumber').textContent = `Slide ${currentSlide} / ${totalSlides}`;
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') changeSlide(-1);
+            if (event.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Vocabulary images via Unsplash
+        function playWord(word) {
+            showVocabImages(word);
+        }
+
+        function showVocabImages(word) {
+            const modal = document.getElementById('imageModal');
+            const grid = document.getElementById('imageGrid');
+            const title = document.getElementById('imageModalTitle');
+            title.textContent = `Pictures for "${word}"`;
+            grid.innerHTML = '';
+            const iframe = document.createElement('iframe');
+            iframe.className = 'image-iframe';
+            iframe.referrerPolicy = 'no-referrer';
+            iframe.src = `https://cn.bing.com/images/search?q=${encodeURIComponent(word)}&ensearch=0&FORM=HDRSC2`;
+            grid.appendChild(iframe);
+            modal.classList.add('active');
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.remove('active');
+        }
+
+        // Initialize
+        showSlide(1);
+    </script>
+</body>
+</html>

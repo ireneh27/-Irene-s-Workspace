@@ -102,7 +102,7 @@ function loadMaterials() {
 }
 
 // ========================================
-// LESSON SLIDES SECTION
+// LESSON SLIDES SECTION (Categorized by Audience)
 // ========================================
 function loadSlides() {
     console.log('🎓 Loading lesson slides...');
@@ -114,80 +114,160 @@ function loadSlides() {
         return;
     }
 
-    // ADD YOUR LESSON SLIDES HERE
-    const slideFiles = [
+    // CATEGORIZED LESSON SLIDES BY AUDIENCE LEVEL
+    // Each category can contain multiple slides
+    const slideCategories = [
         {
-            filename: 'Grade 2 Period 1.html',
-            title: 'Grade 2 - Period 1',
-            description: 'English lesson for Grade 2 students, Period 1 curriculum materials and activities.',
-            tags: ['Grade 2', 'Beginner', 'Classroom']
+            category: 'Basic Skills',
+            icon: '🎯',
+            description: 'Foundation building blocks for English learners',
+            slides: [
+                {
+                    filename: 'irregular_verbs_learning.html',
+                    title: 'Irregular Verbs Learning',
+                    description: 'Learn and practice common irregular verbs with examples and exercises.',
+                    tags: ['Grammar', 'Verbs', 'Practice']
+                }
+                // ADD MORE BASIC SKILLS SLIDES HERE
+            ]
         },
         {
-            filename: 'Grade 2 Period 2.html',
-            title: 'Grade 2 - Period 2',
-            description: 'English lesson for Grade 2 students, Period 2 curriculum materials and activities.',
-            tags: ['Grade 2', 'Beginner', 'Classroom']
+            category: 'Primary Level',
+            icon: '🌟',
+            description: 'Elementary level lessons for young learners',
+            slides: [
+                {
+                    filename: 'Grade_2_Class_1_Presentation.html',
+                    title: 'Grade 2 - Class 1 Presentation',
+                    description: 'English lesson presentation for Grade 2 students, Class 1 curriculum materials and activities.',
+                    tags: ['Grade 2', 'Beginner', 'Classroom']
+                },
+                {
+                    filename: 'Grade_2_Class_2_Presentation.html',
+                    title: 'Grade 2 - Class 2 Presentation',
+                    description: 'English lesson presentation for Grade 2 students, Class 2 curriculum materials and activities.',
+                    tags: ['Grade 2', 'Beginner', 'Classroom']
+                },
+                {
+                    filename: 'Grade_2_Class_3_Presentation.html',
+                    title: 'Grade 2 - Class 3 Presentation',
+                    description: 'English lesson presentation for Grade 2 students, Class 3 curriculum materials and activities.',
+                    tags: ['Grade 2', 'Beginner', 'Classroom']
+                },
+                {
+                    filename: 'Grade_2_Worksheets.html',
+                    title: 'Grade 2 Worksheets',
+                    description: 'Practice worksheets and exercises for Grade 2 English learning.',
+                    tags: ['Grade 2', 'Worksheets', 'Practice']
+                }
+                // ADD MORE PRIMARY LEVEL SLIDES HERE
+            ]
         },
         {
-            filename: 'interactive_reading_writing_lesson_ Reflect Unit 2.html',
-            title: 'Reading & Writing: Reflect Unit 2',
-            description: 'Interactive reading and writing activities with reflection exercises for Unit 2.',
-            tags: ['Reading', 'Writing', 'Interactive']
+            category: 'Intermediate Level',
+            icon: '📚',
+            description: 'Intermediate lessons for developing language skills',
+            slides: [
+                {
+                    filename: 'interactive_reading_writing_lesson_ Reflect Unit 2.html',
+                    title: 'Reading & Writing: Reflect Unit 2',
+                    description: 'Interactive reading and writing activities with reflection exercises for Unit 2.',
+                    tags: ['Reading', 'Writing', 'Interactive']
+                }
+                // ADD MORE INTERMEDIATE LEVEL SLIDES HERE
+            ]
         },
         {
-            filename: 'irregular_verbs_learning.html',
-            title: 'Irregular Verbs Learning',
-            description: 'Learn and practice common irregular verbs with examples and exercises.',
-            tags: ['Grammar', 'Verbs', 'Practice']
-        },   
+            category: 'Advanced Level',
+            icon: '🚀',
+            description: 'Advanced lessons for proficient learners',
+            slides: [
+                // ADD ADVANCED LEVEL SLIDES HERE
+                // {
+                //     filename: 'advanced-lesson.html',
+                //     title: 'Advanced Lesson Title',
+                //     description: 'Brief description of the advanced lesson',
+                //     tags: ['Advanced', 'Topic', 'Skill']
+                // }
+            ]
+        },
         {
-            filename: 'parenting_assessment.html',
-            title: '育儿风格深度评估',
-            description: '帮助您了解您的真实育儿画像',
-            tags: ['正面管教', '家庭教育', '育儿']
+            category: 'Family Education',
+            icon: '👨‍👩‍👧‍👦',
+            description: 'Resources and materials for family learning and parenting',
+            slides: [
+                {
+                    filename: 'parenting_assessment.html',
+                    title: '育儿风格深度评估',
+                    description: '帮助您了解您的真实育儿画像',
+                    tags: ['正面管教', '家庭教育', '育儿']
+                }
+                // ADD MORE FAMILY EDUCATION SLIDES HERE
+            ]
         }
-        // ADD MORE SLIDES HERE:
-        // {
-        //     filename: 'your-lesson.html',
-        //     title: 'Your Lesson Title',
-        //     description: 'Brief description of what students will learn',
-        //     tags: ['Category', 'Level', 'Topic']
-        // }
     ];
 
     let slidesHTML = '';
     
-    slideFiles.forEach((slide, index) => {
-        console.log(`  Processing slide ${index + 1}: ${slide.title}`);
-        
-        const tagsHTML = slide.tags.map(tag => 
-            `<span class="tech-tag">${tag}</span>`
-        ).join('');
+    slideCategories.forEach((category, categoryIndex) => {
+        // Skip categories with no slides
+        if (category.slides.length === 0) {
+            return;
+        }
 
+        console.log(`  Processing category ${categoryIndex + 1}: ${category.category} (${category.slides.length} slides)`);
+        
         slidesHTML += `
-            <div class="project-card">
-                <div class="project-header">
-                    <h3>${slide.title}</h3>
-                    <div class="project-links">
-                        <a href="slides/${encodeURIComponent(slide.filename)}" class="project-link" aria-label="View Slides">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                <polyline points="15 3 21 3 21 9"></polyline>
-                                <line x1="10" y1="14" x2="21" y2="3"></line>
-                            </svg>
-                        </a>
+            <div class="slide-category-section">
+                <div class="category-header">
+                    <div class="category-icon">${category.icon}</div>
+                    <div class="category-info">
+                        <h3 class="category-title">${category.category}</h3>
+                        <p class="category-description">${category.description}</p>
                     </div>
                 </div>
-                <p class="project-description">${slide.description}</p>
-                <div class="project-tech">
-                    ${tagsHTML}
+                <div class="category-slides-grid">
+        `;
+
+        category.slides.forEach((slide, slideIndex) => {
+            console.log(`    Processing slide ${slideIndex + 1}: ${slide.title}`);
+            
+            const tagsHTML = slide.tags.map(tag => 
+                `<span class="tech-tag">${tag}</span>`
+            ).join('');
+
+            slidesHTML += `
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>${slide.title}</h3>
+                        <div class="project-links">
+                            <a href="slides/${encodeURIComponent(slide.filename)}" class="project-link" aria-label="View Slides">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <p class="project-description">${slide.description}</p>
+                    <div class="project-tech">
+                        ${tagsHTML}
+                    </div>
+                </div>
+            `;
+        });
+
+        slidesHTML += `
                 </div>
             </div>
         `;
     });
 
     slidesContainer.innerHTML = slidesHTML;
-    console.log(`✅ Successfully loaded ${slideFiles.length} lesson slides!`);
+    
+    const totalSlides = slideCategories.reduce((sum, cat) => sum + cat.slides.length, 0);
+    console.log(`✅ Successfully loaded ${totalSlides} lesson slides across ${slideCategories.filter(c => c.slides.length > 0).length} categories!`);
 }
 
 // ========================================

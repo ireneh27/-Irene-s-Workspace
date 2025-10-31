@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 1: Investigate & Survey - Healthy Snack Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .slide-content {
+            background: white;
+            border-radius: 30px;
+            padding: 35px 40px;
+            max-width: 1200px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        h1 {
+            color: #2c5f2d;
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #1976d2;
+            font-size: 2.2em;
+            margin: 20px 0 15px;
+            text-align: center;
+        }
+        
+        h3 {
+            color: #555;
+            font-size: 1.8em;
+            margin: 15px 0;
+        }
+        
+        p, li {
+            font-size: 1.6em;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+        
+        .emoji {
+            font-size: 3em;
+            margin: 0 10px;
+        }
+        
+        .rule-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 15px 0;
+            font-size: 1.5em;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .vocab-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 12px 0;
+            font-size: 1.4em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .vocab-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .interactive-button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.8em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        .interactive-button:hover {
+            background: #45a049;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.6);
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+        
+        .nav-button {
+            background: white;
+            border: 3px solid #4caf50;
+            color: #4caf50;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .nav-button:hover {
+            background: #4caf50;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .slide-number {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4caf50;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        ul li::before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+        
+        .highlight {
+            background: #fff9c4;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .snack-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .snack-item {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .snack-item:hover {
+            transform: scale(1.1) rotate(2deg);
+        }
+        
+        .timer {
+            background: #ff5722;
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 15px 0;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.4);
+        }
+        
+        .activity-box {
+            background: #e8f5e9;
+            border: 5px solid #4caf50;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 15px 0;
+        }
+        
+        .teacher-note {
+            display: none;
+        }
+        
+        .chinese {
+            color: #666;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        
+        /* Image modal for vocabulary */
+        .image-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        .image-modal-overlay.active {
+            display: flex;
+        }
+        .image-modal-content {
+            background: #fff;
+            border-radius: 20px;
+            max-width: 95vw;
+            max-height: 95vh;
+            overflow: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            padding: 20px 20px 10px 20px;
+        }
+        .image-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .image-modal-title {
+            font-size: 1.6em;
+            color: #333;
+            font-weight: bold;
+        }
+        .modal-close {
+            background: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 16px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .image-grid { /* kept for backward compatibility */ }
+        .image-iframe {
+            width: 90vw;
+            height: 80vh;
+            border: 0;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-number" id="slideNumber">Slide 1 / 15</div>
+    
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active" id="slide1">
+            <div class="slide-content">
+                <h1>🍎 Healthy Snack Shop! 🥗</h1>
+                <h2>Class 1: Investigate & Survey</h2>
+                <p style="text-align: center; font-size: 2.2em; margin-top: 40px;">
+                    <span class="emoji">👋</span> Welcome, Grade 2! <span class="emoji">🎉</span>
+                </p>
+                <p style="text-align: center; font-size: 1.8em; color: #666;">
+                    Today we become <span class="highlight">Snack Detectives!</span>
+                </p>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Welcome students warmly. Check audio/video with local teacher.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Lesson Objectives -->
+        <div class="slide" id="slide2">
+            <div class="slide-content">
+                <h1>📋 Today's Mission!</h1>
+                <h3>By the end of class, you will:</h3>
+                <ul style="font-size: 1.8em;">
+                    <li>Learn what makes snacks HEALTHY <span class="emoji">💪</span></li>
+                    <li>Learn 5 new English words <span class="emoji">📚</span></li>
+                    <li>Do a survey with classmates <span class="emoji">📊</span></li>
+                    <li>Work as a TEAM <span class="emoji">👥</span></li>
+                </ul>
+                <div class="timer">⏰ 40 Minutes</div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Read objectives clearly. Ask students to repeat key words.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Warm Up -->
+        <div class="slide" id="slide3">
+            <div class="slide-content">
+                <h1>🤔 Quick Question!</h1>
+                <h2 style="color: #f57c00; font-size: 3em; margin: 40px 0;">
+                    Do you like snacks?
+                </h2>
+                <p style="text-align: center; font-size: 2em;">
+                    If YES, stand up! 🙋<br>
+                    If NO, sit down! 💺
+                </p>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Wait for students to respond. Count how many stood up. "Wow! Almost everyone likes snacks!"
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: The Problem -->
+        <div class="slide" id="slide4">
+            <div class="slide-content">
+                <h1>🤔 But Wait...</h1>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 40px 0;">
+                    <div style="background: #ffebee; padding: 30px; border-radius: 20px;">
+                        <h3 style="color: #f44336;">😢 Not Good Snacks</h3>
+                        <p style="font-size: 1.6em;">🍭 Too much sugar<br>🍪 Not natural<br>🍬 Bad for teeth</p>
+                    </div>
+                    <div style="background: #e8f5e9; padding: 30px; border-radius: 20px;">
+                        <h3 style="color: #4caf50;">😊 Good Snacks</h3>
+                        <p style="font-size: 1.6em;">🍎 Natural<br>🥜 Make you strong<br>🧀 Good for body</p>
+                    </div>
+                </div>
+                <h2 style="color: #f57c00;">Question: How do we know?</h2>
+            </div>
+        </div>
+
+        <!-- Slide 5: 3 Rules -->
+        <div class="slide" id="slide5">
+            <div class="slide-content">
+                <h1>✨ 3 Rules for Healthy Snacks!</h1>
+                <div class="rule-box" style="background: linear-gradient(135deg, #fff9c4 0%, #fbc02d 100%); color: #333;">
+                    <h3 style="color: #f57c00;">🍬 Rule 1: Not Too Much Sugar</h3>
+                    <p>Too much sugar is bad for your teeth!</p>
+                </div>
+                <div class="rule-box" style="background: linear-gradient(135deg, #e3f2fd 0%, #2196f3 100%);">
+                    <h3>🌳 Rule 2: From Nature</h3>
+                    <p>Apples grow on trees. Natural is good!</p>
+                </div>
+                <div class="rule-box" style="background: linear-gradient(135deg, #ffebee 0%, #f44336 100%);">
+                    <h3>💪 Rule 3: Makes You Strong</h3>
+                    <p>Healthy snacks help you run fast and think smart!</p>
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Read each rule. Ask students to repeat. Point to examples.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Vocabulary Introduction -->
+        <div class="slide" id="slide6">
+            <div class="slide-content">
+                <h1>📚 New Words!</h1>
+                <h3 style="text-align: center; color: #666;">Click on each word to hear it!</h3>
+                <div class="vocab-card" onclick="playWord('healthy')">
+                    <strong style="font-size: 1.5em;">Healthy</strong> /ˈhelθi/ <span class="chinese">(健康的)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Good for your body</p>
+                </div>
+                <div class="vocab-card" onclick="playWord('unhealthy')">
+                    <strong style="font-size: 1.5em;">Unhealthy</strong> /ʌnˈhelθi/ <span class="chinese">(不健康的)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Bad for your body</p>
+                </div>
+                <div class="vocab-card" onclick="playWord('sugar')">
+                    <strong style="font-size: 1.5em;">Sugar</strong> /ˈʃʊɡər/ <span class="chinese">(糖)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">The sweet stuff in food</p>
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Say each word 3 times slowly. Have students repeat.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: More Vocabulary -->
+        <div class="slide" id="slide7">
+            <div class="slide-content">
+                <h1>📚 More New Words!</h1>
+                <div class="vocab-card" onclick="playWord('natural')">
+                    <strong style="font-size: 1.5em;">Natural</strong> /ˈnætʃərəl/ <span class="chinese">(天然的)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">From nature, not from a factory</p>
+                </div>
+                <div class="vocab-card" onclick="playWord('strong')">
+                    <strong style="font-size: 1.5em;">Strong</strong> /strɔŋ/ <span class="chinese">(强壮的)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Has power; not weak</p>
+                </div>
+                <div class="vocab-card" onclick="playWord('survey')">
+                    <strong style="font-size: 1.5em;">Survey</strong> /ˈsɜrveɪ/ <span class="chinese">(调查)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Ask people questions</p>
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Emphasize pronunciation. Check understanding with local teacher.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Healthy vs Unhealthy Game -->
+        <div class="slide" id="slide8">
+            <div class="slide-content">
+                <h1>🎮 Game Time!</h1>
+                <h2>Is it Healthy or Unhealthy?</h2>
+                <p style="text-align: center; font-size: 1.8em; margin: 30px 0;">
+                    Stand up if HEALTHY 🟢<br>
+                    Sit down if UNHEALTHY 🔴
+                </p>
+                <div id="gameItems" style="margin: 40px 0;">
+                    <button class="interactive-button" onclick="showGameItem(0)">Start Game!</button>
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Call out: Apple, Candy, Nuts, Soda, Yogurt, Chips. Wait for responses.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Team Roles Introduction -->
+        <div class="slide" id="slide9">
+            <div class="slide-content">
+                <h1>👥 Meet Your Team Roles!</h1>
+                <div class="snack-grid">
+                    <div class="snack-item" style="background: linear-gradient(135deg, #e3f2fd 0%, #2196f3 100%);">
+                        🔍<br><strong>Research Leader</strong>
+                    </div>
+                    <div class="snack-item" style="background: linear-gradient(135deg, #fff9c4 0%, #fbc02d 100%); color: #333;">
+                        💰<br><strong>Budget Manager</strong>
+                    </div>
+                    <div class="snack-item" style="background: linear-gradient(135deg, #f3e5f5 0%, #9c27b0 100%);">
+                        🎨<br><strong>Design Manager</strong>
+                    </div>
+                    <div class="snack-item" style="background: linear-gradient(135deg, #ffebee 0%, #f44336 100%);">
+                        📢<br><strong>Marketing Manager</strong>
+                    </div>
+                    <div class="snack-item" style="background: linear-gradient(135deg, #e8f5e9 0%, #4caf50 100%);">
+                        👨‍✈️<br><strong>Team Captain</strong>
+                    </div>
+                    <div class="snack-item" style="background: linear-gradient(135deg, #fff3e0 0%, #ff9800 100%); color: #333;">
+                        Everyone works together! 🤝
+                    </div>
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Local teacher will help assign roles. Each team needs 5 people.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Survey Instructions -->
+        <div class="slide" id="slide10">
+            <div class="slide-content">
+                <h1>📊 Survey Time!</h1>
+                <h2>Your Mission:</h2>
+                <div class="activity-box">
+                    <h3 style="color: #2c5f2d; margin-bottom: 20px;">Ask 10 classmates:</h3>
+                    <p style="font-size: 2em; text-align: center; margin: 30px 0; background: #fff9c4; padding: 20px; border-radius: 15px;">
+                        <strong>"Which healthy snacks would you buy?"</strong>
+                    </p>
+                    <h3 style="color: #1976d2;">Use These Polite Phrases:</h3>
+                    <ul style="font-size: 1.6em;">
+                        <li>"Excuse me, may I ask you a question?"</li>
+                        <li>"Which snack would you buy?"</li>
+                        <li>"Thank you for your help!"</li>
+                    </ul>
+                </div>
+                <div class="timer">⏰ 15 Minutes</div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Snack Options -->
+        <div class="slide" id="slide11">
+            <div class="slide-content">
+                <h1>🍎 Snack Options for Survey</h1>
+                <div class="snack-grid">
+                    <div class="snack-item">🍎 Fresh Fruit</div>
+                    <div class="snack-item">🥭 Dried Fruit</div>
+                    <div class="snack-item">🥜 Nuts</div>
+                    <div class="snack-item">🧁 Yogurt</div>
+                    <div class="snack-item">🍘 Crackers</div>
+                    <div class="snack-item">🥕 Vegetables</div>
+                    <div class="snack-item">🍿 Popcorn</div>
+                    <div class="snack-item">🧀 Cheese</div>
+                    <div class="snack-item">🥚 Eggs</div>
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Practice saying each snack name. Students repeat.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Survey Practice -->
+        <div class="slide" id="slide12">
+            <div class="slide-content">
+                <h1>🎭 Practice Time!</h1>
+                <h2>Let's practice the survey conversation!</h2>
+                <div style="background: #e3f2fd; padding: 40px; border-radius: 20px; margin: 30px 0; font-size: 1.6em;">
+                    <p style="color: #1976d2; margin: 15px 0;"><strong>Student A:</strong> "Excuse me, may I ask you a question?"</p>
+                    <p style="color: #4caf50; margin: 15px 0;"><strong>Student B:</strong> "Sure!"</p>
+                    <p style="color: #1976d2; margin: 15px 0;"><strong>Student A:</strong> "Which snack would you buy?"</p>
+                    <p style="color: #4caf50; margin: 15px 0;"><strong>Student B:</strong> "I would buy apples!"</p>
+                    <p style="color: #1976d2; margin: 15px 0;"><strong>Student A:</strong> "Thank you for your help!"</p>
+                    <p style="color: #4caf50; margin: 15px 0;"><strong>Student B:</strong> "You're welcome!"</p>
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Model the conversation. Have 2 students demonstrate.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Survey Activity -->
+        <div class="slide" id="slide13">
+            <div class="slide-content">
+                <h1>🏃 Go Survey!</h1>
+                <h2 style="color: #f57c00;">Remember:</h2>
+                <ul style="font-size: 2em;">
+                    <li>Use ENGLISH! 🇬🇧</li>
+                    <li>Be polite and friendly! 😊</li>
+                    <li>Write down the answers! ✍️</li>
+                    <li>Ask 10 different people! 👥</li>
+                </ul>
+                <div class="timer">⏰ 15 Minutes - GO!</div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Local teacher supervises. Native teacher monitors and helps via video. Play energetic music during activity!
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Wrap Up -->
+        <div class="slide" id="slide14">
+            <div class="slide-content">
+                <h1>📊 Count Your Results!</h1>
+                <h2>With your team:</h2>
+                <div class="activity-box">
+                    <ul style="font-size: 1.8em;">
+                        <li>Count the votes for each snack 🔢</li>
+                        <li>Find your TOP 3 snacks 🥇🥈🥉</li>
+                        <li>Write them on your worksheet ✍️</li>
+                    </ul>
+                </div>
+                <div class="timer">⏰ 5 Minutes</div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Walk teams through counting. Show example on screen.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Closing -->
+        <div class="slide" id="slide15">
+            <div class="slide-content">
+                <h1>🎉 Great Job Today!</h1>
+                <h2>You Learned:</h2>
+                <ul style="font-size: 2em;">
+                    <li>3 rules for healthy snacks ✨</li>
+                    <li>6 new English words 📚</li>
+                    <li>How to do a survey 📊</li>
+                    <li>How to work as a team 👥</li>
+                </ul>
+                <h2 style="color: #f57c00; margin-top: 50px;">Next Class:</h2>
+                <p style="font-size: 2em; text-align: center;">We will PLAN our snack shop! 🏪</p>
+                <p style="text-align: center; font-size: 3em; margin-top: 30px;">👋 Goodbye! See you next time! 🌟</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vocabulary Images Modal -->
+    <div class="image-modal-overlay" id="imageModal" onclick="if(event.target===this){closeImageModal();}">
+        <div class="image-modal-content">
+            <div class="image-modal-header">
+                <div class="image-modal-title" id="imageModalTitle">Images</div>
+                <button class="modal-close" onclick="closeImageModal()">Close ✖</button>
+            </div>
+            <div class="image-grid" id="imageGrid"></div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">⬅️ Previous</button>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next ➡️</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 15;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n > totalSlides) currentSlide = totalSlides;
+            if (n < 1) currentSlide = 1;
+            
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            slides[currentSlide - 1].classList.add('active');
+            
+            document.getElementById('slideNumber').textContent = `Slide ${currentSlide} / ${totalSlides}`;
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') changeSlide(-1);
+            if (event.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Vocabulary images via Unsplash
+        function playWord(word) {
+            showVocabImages(word);
+        }
+
+        function showVocabImages(word) {
+            const modal = document.getElementById('imageModal');
+            const grid = document.getElementById('imageGrid');
+            const title = document.getElementById('imageModalTitle');
+            title.textContent = `Pictures for "${word}"`;
+            grid.innerHTML = '';
+            const iframe = document.createElement('iframe');
+            iframe.className = 'image-iframe';
+            iframe.referrerPolicy = 'no-referrer';
+            iframe.src = `https://cn.bing.com/images/search?q=${encodeURIComponent(word)}&ensearch=0&FORM=HDRSC2`;
+            grid.appendChild(iframe);
+            modal.classList.add('active');
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.remove('active');
+        }
+
+        // Game functionality
+        const gameItems = [
+            {item: "🍎 Apple", answer: "healthy"},
+            {item: "🍭 Candy", answer: "unhealthy"},
+            {item: "🥜 Nuts", answer: "healthy"},
+            {item: "🥤 Soda", answer: "unhealthy"},
+            {item: "🧁 Yogurt", answer: "healthy"},
+            {item: "🍟 Chips", answer: "unhealthy"}
+        ];
+        let gameIndex = 0;
+
+        function showGameItem(index) {
+            if (index < gameItems.length) {
+                const gameDiv = document.getElementById('gameItems');
+                gameDiv.innerHTML = `
+                    <h2 style="font-size: 4em; margin: 40px 0;">${gameItems[index].item}</h2>
+                    <button class="interactive-button" onclick="showGameItem(${index + 1})">
+                        Next Item ➡️
+                    </button>
+                `;
+            } else {
+                const gameDiv = document.getElementById('gameItems');
+                gameDiv.innerHTML = '<h2 style="color: #4caf50; font-size: 3em;">🎉 Great job! You know healthy snacks!</h2>';
+            }
+        }
+
+        // Initialize
+        showSlide(1);
+    </script>
+</body>
+</html>

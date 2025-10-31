@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 3: Perform & Present - Healthy Snack Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .slide-content {
+            background: white;
+            border-radius: 30px;
+            padding: 35px 40px;
+            max-width: 1200px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        h1 {
+            color: #e65100;
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #9c27b0;
+            font-size: 2.2em;
+            margin: 20px 0 15px;
+            text-align: center;
+        }
+        
+        h3 {
+            color: #555;
+            font-size: 1.8em;
+            margin: 15px 0;
+        }
+        
+        p, li {
+            font-size: 1.6em;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+        
+        .emoji {
+            font-size: 3em;
+            margin: 0 10px;
+        }
+        
+        .tip-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 15px 0;
+            font-size: 1.5em;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .vocab-card {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 12px 0;
+            font-size: 1.4em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .vocab-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .interactive-button {
+            background: #9c27b0;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.8em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(156, 39, 176, 0.4);
+        }
+        
+        .interactive-button:hover {
+            background: #7b1fa2;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(156, 39, 176, 0.6);
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+        
+        .nav-button {
+            background: white;
+            border: 3px solid #9c27b0;
+            color: #9c27b0;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .nav-button:hover {
+            background: #9c27b0;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .slide-number {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #9c27b0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        ul li::before {
+            content: "⭐ ";
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+        
+        .highlight {
+            background: #fff9c4;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .dialogue-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 20px;
+            margin: 15px 0;
+            font-size: 1.4em;
+        }
+        
+        .shopkeeper {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 12px 0;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .customer {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 12px 0;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .timer {
+            background: #f57c00;
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 15px 0;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(245, 124, 0, 0.4);
+        }
+        
+        .activity-box {
+            background: #f3e5f5;
+            border: 5px solid #9c27b0;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 15px 0;
+        }
+        
+        .teacher-note {
+            display: none;
+        }
+        
+        .chinese {
+            color: #333;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        
+        .confidence-boost {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1.8em;
+            color: #333;
+            font-weight: bold;
+            margin: 20px 0;
+            border: 5px solid #f39c12;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        
+        .presentation-tips {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .tip-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .countdown {
+            font-size: 4em;
+            text-align: center;
+            margin: 40px 0;
+            color: #e65100;
+            font-weight: bold;
+        }
+        
+        .celebration {
+            text-align: center;
+            font-size: 5em;
+            margin: 40px 0;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .certificate-preview {
+            background: linear-gradient(to bottom, #fffef7, #fff9e6);
+            border: 8px double #ffd700;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        /* Image modal for vocabulary */
+        .image-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        .image-modal-overlay.active {
+            display: flex;
+        }
+        .image-modal-content {
+            background: #fff;
+            border-radius: 20px;
+            max-width: 95vw;
+            max-height: 95vh;
+            overflow: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            padding: 20px 20px 10px 20px;
+        }
+        .image-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .image-modal-title {
+            font-size: 1.6em;
+            color: #333;
+            font-weight: bold;
+        }
+        .modal-close {
+            background: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 16px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .image-grid { /* kept for backward compatibility */ }
+        .image-iframe {
+            width: 90vw;
+            height: 80vh;
+            border: 0;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-number" id="slideNumber">Slide 1 / 18</div>
+    
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active" id="slide1">
+            <div class="slide-content">
+                <h1>🎭 Show Time! 🌟</h1>
+                <h2>Class 3: Perform & Present</h2>
+                <p style="text-align: center; font-size: 2.2em; margin-top: 40px;">
+                    <span class="emoji">🎉</span> The Final Day! <span class="emoji">🎊</span>
+                </p>
+                <p style="text-align: center; font-size: 1.8em; color: #666;">
+                    Today we become <span class="highlight">Performance Stars!</span>
+                </p>
+                <div class="confidence-boost">
+                    💪 You Can Do This! 🌟
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Create excitement! Applaud students for their hard work. "Today is YOUR day to shine!"
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Lesson Objectives -->
+        <div class="slide" id="slide2">
+            <div class="slide-content">
+                <h1>📋 Today's Mission!</h1>
+                <h3>By the end of class, you will:</h3>
+                <ul style="font-size: 1.8em;">
+                    <li>Practice your role play <span class="emoji">🎭</span></li>
+                    <li>Present your shop to the class <span class="emoji">👥</span></li>
+                    <li>Use English confidently <span class="emoji">💬</span></li>
+                    <li>Celebrate your success! <span class="emoji">🎉</span></li>
+                </ul>
+                <div class="timer">⏰ 40 Minutes</div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> "Raise your hand if you're excited!" Build positive energy!
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Confidence Builder -->
+        <div class="slide" id="slide3">
+            <div class="slide-content">
+                <h1>💪 You Are Ready!</h1>
+                <h2>Remember:</h2>
+                <div class="confidence-boost">
+                    Your classmates are your FRIENDS! 🤗
+                </div>
+                <div class="confidence-boost">
+                    They WANT you to do well! ❤️
+                </div>
+                <div class="confidence-boost">
+                    Everyone is a little nervous - it's OK! 😊
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> "Who feels a little nervous? That's normal! Take a deep breath with me. Inhale... Exhale..."
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: New Vocabulary -->
+        <div class="slide" id="slide4">
+            <div class="slide-content">
+                <h1>📚 Final New Words!</h1>
+                <div class="vocab-card" onclick="playWord('roleplay')">
+                    <strong style="font-size: 1.5em;">Role Play</strong> /roʊl pleɪ/ <span class="chinese">(角色扮演)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Act like someone else</p>
+                </div>
+                <div class="vocab-card" onclick="playWord('shopkeeper')">
+                    <strong style="font-size: 1.5em;">Shopkeeper</strong> /ˈʃɑpkiːpər/ <span class="chinese">(店主)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Person who works in a shop</p>
+                </div>
+                <div class="vocab-card" onclick="playWord('present')">
+                    <strong style="font-size: 1.5em;">Present</strong> /prɪˈzent/ <span class="chinese">(展示)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Show something to people</p>
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Practice pronunciation. Act out each word!
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: More Vocabulary -->
+        <div class="slide" id="slide5">
+            <div class="slide-content">
+                <h1>📚 More Words!</h1>
+                <div class="vocab-card" onclick="playWord('audience')">
+                    <strong style="font-size: 1.5em;">Audience</strong> /ˈɔːdiəns/ <span class="chinese">(观众)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">People who watch you</p>
+                </div>
+                <div class="vocab-card" onclick="playWord('confident')">
+                    <strong style="font-size: 1.5em;">Confident</strong> /ˈkɑnfɪdənt/ <span class="chinese">(自信的)</span>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Feel sure you can do it!</p>
+                </div>
+                <div class="activity-box">
+                    <h3 style="color: #9c27b0;">Say together:</h3>
+                    <p style="font-size: 2em; text-align: center; margin: 20px 0;">
+                        "I am CONFIDENT!" 💪
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: How to Speak Well -->
+        <div class="slide" id="slide6">
+            <div class="slide-content">
+                <h1>📣 How to Speak WELL!</h1>
+                <div class="presentation-tips">
+                    <div class="tip-card">
+                        <h3 style="margin-bottom: 20px;">🔊 LOUD</h3>
+                        <p>Everyone needs to hear you!</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3 style="margin-bottom: 20px;">🐢 SLOW</h3>
+                        <p>Not too fast, not too slow!</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3 style="margin-bottom: 20px;">✨ CLEAR</h3>
+                        <p>Say each word carefully!</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3 style="margin-bottom: 20px;">💖 HAPPY</h3>
+                        <p>Show you enjoy it!</p>
+                    </div>
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Model each tip. Have students practice saying "Welcome to our shop!" loud, slow, clear, and happy!
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: How to Look Good -->
+        <div class="slide" id="slide7">
+            <div class="slide-content">
+                <h1>👀 How to LOOK Great!</h1>
+                <div class="presentation-tips">
+                    <div class="tip-card">
+                        <h3 style="margin-bottom: 20px;">👁️ Eye Contact</h3>
+                        <p>Look at people!<br>Don't look at the floor!</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3 style="margin-bottom: 20px;">🧍 Stand Tall</h3>
+                        <p>Stand up straight!<br>Be tall and proud!</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3 style="margin-bottom: 20px;">😊 SMILE!</h3>
+                        <p>Show you are happy!<br>Smiles are powerful!</p>
+                    </div>
+                    <div class="tip-card">
+                        <h3 style="margin-bottom: 20px;">🙌 Use Hands</h3>
+                        <p>Point to your menu!<br>Make it interesting!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Shopping Phrases -->
+        <div class="slide" id="slide8">
+            <div class="slide-content">
+                <h1>🛍️ Shopping Language Review</h1>
+                <div class="shopkeeper">
+                    <h3 style="color: #1976d2; margin-bottom: 15px;">🏪 Shopkeeper says:</h3>
+                    <ul style="font-size: 1.5em;">
+                        <li>"Welcome to our shop!"</li>
+                        <li>"Can I help you?"</li>
+                        <li>"We have _____ and _____."</li>
+                        <li>"It's healthy because _____."</li>
+                        <li>"It costs _____ yuan."</li>
+                        <li>"Thank you! Come again!"</li>
+                    </ul>
+                </div>
+                <div class="customer">
+                    <h3 style="color: #2c5f2d; margin-bottom: 15px;">👤 Customer says:</h3>
+                    <ul style="font-size: 1.5em;">
+                        <li>"Hello!"</li>
+                        <li>"What do you have?"</li>
+                        <li>"Why is it healthy?"</li>
+                        <li>"How much is it?"</li>
+                        <li>"I'll take it!"</li>
+                        <li>"Thank you!"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Sample Dialogue -->
+        <div class="slide" id="slide9">
+            <div class="slide-content">
+                <h1>🎭 Example Role Play</h1>
+                <div class="dialogue-box">
+                    <div class="shopkeeper">
+                        <strong>SHOPKEEPER:</strong> "Welcome to Healthy Corner! Can I help you?"
+                    </div>
+                    <div class="customer">
+                        <strong>CUSTOMER:</strong> "Yes! What do you have?"
+                    </div>
+                    <div class="shopkeeper">
+                        <strong>SHOPKEEPER:</strong> "We have fresh apples and yummy yogurt!"
+                    </div>
+                    <div class="customer">
+                        <strong>CUSTOMER:</strong> "Why is the yogurt healthy?"
+                    </div>
+                    <div class="shopkeeper">
+                        <strong>SHOPKEEPER:</strong> "It has protein! It makes you strong!"
+                    </div>
+                    <div class="customer">
+                        <strong>CUSTOMER:</strong> "How much is it?"
+                    </div>
+                    <div class="shopkeeper">
+                        <strong>SHOPKEEPER:</strong> "Only 5 yuan! Great price!"
+                    </div>
+                    <div class="customer">
+                        <strong>CUSTOMER:</strong> "I'll take it! Here's 5 yuan."
+                    </div>
+                    <div class="shopkeeper">
+                        <strong>SHOPKEEPER:</strong> "Thank you! Good choice! Be healthy!"
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Practice Time -->
+        <div class="slide" id="slide10">
+            <div class="slide-content">
+                <h1>🎭 Practice Time!</h1>
+                <h2>With your team:</h2>
+                <div class="activity-box">
+                    <ul style="font-size: 1.8em;">
+                        <li>Run through your role play 3 times 🔁</li>
+                        <li>Remember your lines 📝</li>
+                        <li>Practice speaking LOUD and CLEAR 📣</li>
+                        <li>Use your menu as a prop 📋</li>
+                        <li>Help each other! 🤝</li>
+                    </ul>
+                </div>
+                <div class="timer">⏰ 10 Minutes - Practice!</div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Circulate. Give positive feedback. "Great energy!" "Speak louder!" "Good eye contact!"
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Final Checklist -->
+        <div class="slide" id="slide11">
+            <div class="slide-content">
+                <h1>✅ Ready to Present?</h1>
+                <h2>Check these things:</h2>
+                <div class="activity-box">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 1.6em;">
+                        <div>
+                            <p>☐ Everyone knows their lines</p>
+                            <p>☐ We have our menu ready</p>
+                            <p>☐ We speak loudly</p>
+                            <p>☐ We speak clearly</p>
+                        </div>
+                        <div>
+                            <p>☐ We make eye contact</p>
+                            <p>☐ We smile</p>
+                            <p>☐ We use English only</p>
+                            <p>☐ We are confident!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="confidence-boost">
+                    🌟 You've Got This! 🌟
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Presentation Rules -->
+        <div class="slide" id="slide12">
+            <div class="slide-content">
+                <h1>📜 Presentation Rules</h1>
+                <h2 style="color: #e65100;">When it's YOUR turn:</h2>
+                <div class="tip-box">
+                    <ul style="font-size: 1.6em;">
+                        <li>Come to the front quickly 🏃</li>
+                        <li>Stand together as a team 👥</li>
+                        <li>Hold up your menu 📋</li>
+                        <li>Perform under 2 minutes ⏰</li>
+                        <li>Have fun! 🎉</li>
+                    </ul>
+                </div>
+                <h2 style="color: #9c27b0;">When it's ANOTHER team's turn:</h2>
+                <div class="tip-box" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <ul style="font-size: 1.6em;">
+                        <li>Sit quietly and listen 🤫</li>
+                        <li>Watch respectfully 👀</li>
+                        <li>Clap when they finish 👏</li>
+                        <li>Be supportive! 💖</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Motivation Slide -->
+        <div class="slide" id="slide13">
+            <div class="slide-content">
+                <h1>💪 You Are AMAZING!</h1>
+                <div class="confidence-boost">
+                    You worked HARD! 💪
+                </div>
+                <div class="confidence-boost">
+                    You learned SO MUCH! 📚
+                </div>
+                <div class="confidence-boost">
+                    You are READY! ✨
+                </div>
+                <div class="celebration">
+                    🌟 ⭐ 🌟
+                </div>
+                <h2 style="color: #e65100; margin-top: 40px;">Let's show what you can do!</h2>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Build excitement! "Who's ready? Let me hear you say 'We are ready!'"
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Presentation Time -->
+        <div class="slide" id="slide14">
+            <div class="slide-content">
+                <h1>🎭 Presentation Time!</h1>
+                <h2 style="font-size: 3em; color: #f57c00;">Team 1 - You're Up!</h2>
+                <div class="countdown">
+                    3... 2... 1... GO! 🎬
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Call teams one by one. Give enthusiastic introduction for each team. Take photos/videos if permitted! Encourage applause after each presentation.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Encouragement During Presentations -->
+        <div class="slide" id="slide15">
+            <div class="slide-content">
+                <h1>👏 Great Job, Everyone!</h1>
+                <div class="celebration">
+                    🎉 🎊 🎈 🎁
+                </div>
+                <h2 style="color: #4caf50;">Every team was AMAZING!</h2>
+                <div class="activity-box">
+                    <h3 style="color: #9c27b0; margin-bottom: 20px;">What I noticed:</h3>
+                    <ul style="font-size: 1.8em;">
+                        <li>Great teamwork! 🤝</li>
+                        <li>Confident speaking! 💬</li>
+                        <li>Creative ideas! 💡</li>
+                        <li>Beautiful menus! 🎨</li>
+                        <li>Good English! 🇬🇧</li>
+                    </ul>
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Give specific praise to each team. Mention what they did well!
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Project Review -->
+        <div class="slide" id="slide16">
+            <div class="slide-content">
+                <h1>📚 What Did We Learn?</h1>
+                <h2>In these 3 classes, you:</h2>
+                <ul style="font-size: 2em;">
+                    <li>Learned about HEALTHY food 🥗</li>
+                    <li>Learned 15+ English words 📖</li>
+                    <li>Did SURVEYS 📊</li>
+                    <li>Designed MENUS 🎨</li>
+                    <li>Worked as a TEAM 👥</li>
+                    <li>PRESENTED in English 🎭</li>
+                </ul>
+                <div class="confidence-boost">
+                    You should be SO PROUD! 🏆
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Certificates -->
+        <div class="slide" id="slide17">
+            <div class="slide-content">
+                <h1>🏆 Certificate Time!</h1>
+                <div class="certificate-preview">
+                    <h2 style="color: #d4af37; font-size: 3em;">🏆 Certificate of Achievement 🏆</h2>
+                    <p style="font-size: 2em; margin: 30px 0;">
+                        <strong>You are a<br>Healthy Snack Expert!</strong>
+                    </p>
+                    <div class="celebration">
+                        ⭐ 🌟 ⭐
+                    </div>
+                </div>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> Present certificates with ceremony. Shake hands. Take photos if permitted. Make each student feel special!
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Closing -->
+        <div class="slide" id="slide18">
+            <div class="slide-content">
+                <h1>🎉 CONGRATULATIONS! 🎉</h1>
+                <div class="celebration">
+                    🌟 YOU DID IT! 🌟
+                </div>
+                <h2 style="color: #e65100;">Thank you for:</h2>
+                <ul style="font-size: 2em;">
+                    <li>Working hard 💪</li>
+                    <li>Being creative 🎨</li>
+                    <li>Supporting each other 🤝</li>
+                    <li>Using English 🇬🇧</li>
+                    <li>Having fun! 😊</li>
+                </ul>
+                <div class="confidence-boost" style="margin-top: 50px;">
+                    Keep being healthy! Keep learning English!
+                </div>
+                <p style="text-align: center; font-size: 4em; margin-top: 40px;">
+                    👋 Goodbye! 🌈
+                </p>
+                <div class="teacher-note">
+                    <strong>🎓 Teacher:</strong> "Give yourself a big round of applause! You were fantastic! I'm so proud of you all!"
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vocabulary Images Modal -->
+    <div class="image-modal-overlay" id="imageModal" onclick="if(event.target===this){closeImageModal();}">
+        <div class="image-modal-content">
+            <div class="image-modal-header">
+                <div class="image-modal-title" id="imageModalTitle">Images</div>
+                <button class="modal-close" onclick="closeImageModal()">Close ✖</button>
+            </div>
+            <div class="image-grid" id="imageGrid"></div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">⬅️ Previous</button>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next ➡️</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 18;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n > totalSlides) currentSlide = totalSlides;
+            if (n < 1) currentSlide = 1;
+            
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            slides[currentSlide - 1].classList.add('active');
+            
+            document.getElementById('slideNumber').textContent = `Slide ${currentSlide} / ${totalSlides}`;
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') changeSlide(-1);
+            if (event.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Vocabulary images via Unsplash
+        function playWord(word) {
+            showVocabImages(word);
+        }
+
+        function showVocabImages(word) {
+            const modal = document.getElementById('imageModal');
+            const grid = document.getElementById('imageGrid');
+            const title = document.getElementById('imageModalTitle');
+            title.textContent = `Pictures for "${word}"`;
+            grid.innerHTML = '';
+            const iframe = document.createElement('iframe');
+            iframe.className = 'image-iframe';
+            iframe.referrerPolicy = 'no-referrer';
+            iframe.src = `https://cn.bing.com/images/search?q=${encodeURIComponent(word)}&ensearch=0&FORM=HDRSC2`;
+            grid.appendChild(iframe);
+            modal.classList.add('active');
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.remove('active');
+        }
+
+        // Initialize
+        showSlide(1);
+    </script>
+</body>
+</html>
