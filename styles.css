@@ -410,26 +410,39 @@ body {
 
 /* Slide Categories Section - 1 row layout */
 #slides-container {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 0.5rem;
-    overflow-x: hidden !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 1rem;
+    overflow-x: auto;
     overflow-y: visible;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    grid-auto-flow: row;
+    padding-bottom: 0.5rem;
 }
 
 #slides-container * {
     box-sizing: border-box;
 }
 
-/* Hide any scrollbars */
+/* Custom scrollbar styling */
 #slides-container::-webkit-scrollbar {
-    display: none;
+    height: 6px;
+}
+
+#slides-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#slides-container::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.3);
+    border-radius: 3px;
+}
+
+#slides-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.5);
 }
 
 .category-section-link {
@@ -438,12 +451,23 @@ body {
     display: block;
     transition: transform 0.3s ease;
     height: 100%;
-    width: 100%;
-    min-width: 0;
+    flex: 1 1 0;
+    min-width: 200px;
     max-width: 100%;
     box-sizing: border-box;
     overflow: hidden;
-    grid-column: auto;
+}
+
+/* Ensure all categories fit in one row on desktop */
+@media (min-width: 1024px) {
+    #slides-container {
+        overflow-x: hidden !important;
+    }
+    
+    .category-section-link {
+        flex: 1 1 0;
+        min-width: 0;
+    }
 }
 
 .category-section-link:hover {
@@ -988,8 +1012,14 @@ body {
     }
 
     #slides-container {
-        grid-template-columns: 1fr !important;
+        flex-direction: column !important;
         gap: 1.5rem;
+        overflow-x: hidden !important;
+    }
+    
+    .category-section-link {
+        min-width: 100%;
+        max-width: 100%;
     }
 
     .slide-category-section {
