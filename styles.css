@@ -406,8 +406,8 @@ body {
 /* Slide Categories Section - 1 row layout */
 #slides-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
     overflow-x: hidden !important;
     overflow-y: visible;
     width: 100%;
@@ -451,12 +451,13 @@ body {
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
     cursor: pointer;
-    height: 100%;
     width: 100%;
     min-width: 0;
     max-width: 100%;
-    overflow: hidden;
+    overflow: visible;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .category-section-link:hover .slide-category-section {
@@ -472,9 +473,10 @@ body {
 .category-header {
     display: flex;
     align-items: center;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
 }
 
 .category-info {
@@ -524,10 +526,12 @@ body {
 .category-slides-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: 0.5rem;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    flex: 1;
+    min-height: 0;
 }
 
 /* Clickable card links */
@@ -578,6 +582,15 @@ body {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    margin-bottom: 0;
+}
+
+#slides-container .project-tech {
+    margin-top: 0.3rem;
+    margin-bottom: 0;
 }
 
 #slides-container .card-link {
@@ -625,13 +638,14 @@ body {
 
 /* Compact headers in slides section */
 #slides-container .project-header {
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.3rem;
 }
 
 #slides-container .project-header h3 {
     font-size: 0.75rem;
     line-height: 1.2;
     font-weight: 600;
+    margin: 0;
 }
 
 .project-card:hover .project-header h3 {
@@ -674,13 +688,7 @@ body {
 
 /* Compact descriptions in slides section */
 #slides-container .project-description {
-    font-size: 0.65rem;
-    margin-bottom: 0.5rem;
-    line-height: 1.3;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    display: none;
 }
 
 .project-tech {
