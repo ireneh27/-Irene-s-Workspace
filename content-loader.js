@@ -379,7 +379,7 @@ function loadResources() {
     });
 
     resourcesContainer.innerHTML = resourcesHTML;
-    console.log(`✅ Successfully loaded ${resourceCategories.length} resource categories!`);
+    console.log(`✅ Successfully loaded ${resourcesToShow.length} of ${resourceCategories.length} resource categories!`);
 }
 
 // ========================================
