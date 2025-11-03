@@ -401,12 +401,32 @@ body {
     gap: 1.5rem;
 }
 
+.category-section-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.category-section-link:hover {
+    text-decoration: none;
+    transform: translateY(-4px);
+}
+
 .slide-category-section {
     margin-bottom: 0;
     padding: 1rem;
     background: linear-gradient(to bottom, rgba(99, 102, 241, 0.02), transparent);
     border-radius: 0.5rem;
     border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.category-section-link:hover .slide-category-section {
+    background: linear-gradient(to bottom, rgba(99, 102, 241, 0.08), rgba(99, 102, 241, 0.02));
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
 }
 
 .slide-category-section:last-child {
@@ -425,16 +445,6 @@ body {
     flex: 1;
 }
 
-.category-title-link {
-    text-decoration: none;
-    display: inline-block;
-    transition: transform 0.2s ease;
-}
-
-.category-title-link:hover {
-    transform: translateX(4px);
-}
-
 .category-title {
     font-size: 1.125rem;
     font-weight: 700;
@@ -444,11 +454,10 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    cursor: pointer;
     transition: color 0.3s ease;
 }
 
-.category-title:hover {
+.category-section-link:hover .category-title {
     color: var(--primary-dark);
 }
 
@@ -464,7 +473,7 @@ body {
     transform: translateX(-4px);
 }
 
-.category-title-link:hover .title-arrow {
+.category-section-link:hover .title-arrow {
     opacity: 1;
     transform: translateX(0);
 }
@@ -487,10 +496,18 @@ body {
     text-decoration: none;
     color: inherit;
     display: block;
+    position: relative;
+    z-index: 1;
 }
 
 .card-link:hover {
     text-decoration: none;
+}
+
+/* Ensure slide cards are clickable even within category section */
+.category-section-link .card-link {
+    position: relative;
+    z-index: 2;
 }
 
 .card-link .project-card {
@@ -714,11 +731,24 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    height: 100%;
+}
+
+.book-card-link {
+    height: 100%;
 }
 
 /* Reduce height of materials section */
+#materials-container .card-link {
+    height: 100%;
+    display: flex;
+}
+
 #materials-container .project-card {
     padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 #materials-container .project-header {
@@ -766,6 +796,12 @@ body {
 
 .book-info {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-info .project-tech {
+    margin-top: auto;
 }
 
 .publisher-name {

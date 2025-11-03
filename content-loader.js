@@ -222,10 +222,10 @@ function loadSlides() {
         console.log(`  Processing category ${categoryIndex + 1}: ${category.category} (showing ${slidesToShow.length} of ${category.slides.length} slides)`);
         
         slidesHTML += `
-            <div class="slide-category-section">
-                <div class="category-header">
-                    <div class="category-info">
-                        <a href="${categoryPageUrl}" class="category-title-link">
+            <a href="${categoryPageUrl}" class="category-section-link">
+                <div class="slide-category-section">
+                    <div class="category-header">
+                        <div class="category-info">
                             <h3 class="category-title">
                                 ${category.category}
                                 <span class="slide-count">(${category.slides.length})</span>
@@ -234,11 +234,10 @@ function loadSlides() {
                                     <path d="M12 5l7 7-7 7"></path>
                                 </svg>
                             </h3>
-                        </a>
-                        <p class="category-description">${category.description}</p>
+                            <p class="category-description">${category.description}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="category-slides-grid">
+                    <div class="category-slides-grid">
         `;
 
         slidesToShow.forEach((slide, slideIndex) => {
@@ -273,8 +272,9 @@ function loadSlides() {
         });
 
         slidesHTML += `
+                    </div>
                 </div>
-            </div>
+            </a>
         `;
     });
 
