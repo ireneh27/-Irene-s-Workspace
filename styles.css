@@ -397,8 +397,11 @@ body {
 /* Slide Categories Section - 1 row layout */
 #slides-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
+    overflow: visible;
+    width: 100%;
+    max-width: 100%;
 }
 
 .category-section-link {
@@ -407,6 +410,8 @@ body {
     display: block;
     transition: transform 0.3s ease;
     height: 100%;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .category-section-link:hover {
@@ -423,6 +428,9 @@ body {
     transition: all 0.3s ease;
     cursor: pointer;
     height: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .category-section-link:hover .slide-category-section {
